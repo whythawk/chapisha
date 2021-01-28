@@ -33,7 +33,7 @@ frame around it.
 
 You'll need at least Python 3.9, then:
 
-  `pip install chapisha`
+    pip install chapisha
 
 You will also need to install `Pandoc` and `Java`:
 
@@ -59,4 +59,4 @@ Other licenced elements:
 
 * [Samara logo](chapisha/helpers/images/logo.png) is copyright [Whythawk](https://whythawk.com) and [Qwyre](https://gavinchait.com).
 * [Cover photo](tests/data/cover.jpg) is copyright Rodd Halstead, licenced under commercial terms to Whythawk, and used here for test purposes.
-* [Usan Abasi's Lament](tests/data/Usan Abasi’s Lament - ebook.docx) is copyright Gavin Chait, licenced [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) and used here for test purposes.
+* [Usan Abasi's Lament]('tests/data/Usan Abasi’s Lament - ebook.docx') is copyright Gavin Chait, licenced [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) and used here for test purposes.
