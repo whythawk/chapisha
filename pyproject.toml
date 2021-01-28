@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "chapisha"
+version = "0.1.0"
+description = "Chapisha: Docx, HTML, MarkDown, EPUB3 conversion"
+authors = ["Gavin Chait <gchait@whythawk.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9.1"
+PyDocX = "^0.9.10"
+beautifulsoup4 = "^4.9.3"
+pypandoc = "^1.5"
+EbookLib = "^0.17.1"
+epubcheck = "^0.4.2"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+jupyterlab = "^3.0.5"
+Sphinx = "^3.4.3"
+sphinx-rtd-theme = "^0.5.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

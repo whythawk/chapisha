@@ -1,0 +1,136 @@
+@page {
+  margin-bottom: 5pt;
+  margin-top: 5pt;
+  }
+@font-face {
+  font-family: "PT Serif";
+  font-weight: normal;
+  font-style: normal;
+  src: url(../fonts/PT-Serif.ttf);
+  }
+@font-face {
+  font-family: "Times New Roman";
+  font-weight: normal;
+  font-style: normal;
+  src: url(../fonts/Times-New-Roman.ttf);
+  }
+@font-face {
+  font-family: "PT Serif";
+  font-weight: normal;
+  font-style: italic;
+  src: url(../fonts/PT-Serif-Italic.ttf);
+  }
+@font-face {
+  font-family: "Times New Roman";
+  font-weight: normal;
+  font-style: italic;
+  src: url(../fonts/Times-New-Roman-Italic.ttf);
+  }
+@font-face {
+  font-family: "PT Serif";
+  font-weight: bold;
+  font-style: normal;
+  src: url(../fonts/PT-Serif-Bold.ttf);
+  }
+@font-face {
+  font-family: "PT Sans";
+  font-weight: normal;
+  font-style: normal;
+  src: url(../fonts/PT-Sans.ttf);
+  }
+@font-face {
+  font-family: "PT Sans";
+  font-weight: bold;
+  font-style: normal;
+  src: url(../fonts/PT-Sans-Bold.ttf);
+  }
+@font-face {
+  font-family: "PT Sans";
+  font-weight: normal;
+  font-style: italic;
+  src: url(../fonts/PT-Sans-Italic.ttf);
+  }
+body {
+	color: black;
+	display: block;
+	font-family: "PT Serif", serif;
+	font-size: 1em;
+	line-height: 1.8;
+	text-indent: 0;
+	padding-left: 0;
+	padding-right: 0;
+	margin: 0 5pt;
+	border: currentColor none medium;
+}
+h1, h2, h3, h4 {
+	display: block;
+	font-family: "PT Serif", serif;
+	font-weight: bold;
+	line-height: 180%;
+	page-break-after: avoid;
+	text-align: center;
+	margin: 0 0 12pt;
+}
+h1 {
+	font-size: 1.8em;
+}
+h2 {
+	font-size: 1.6em;
+}
+h3 {
+	font-size: 1.4em;
+}
+h4 {
+	font-size: 1.2em;
+}
+p {
+	display: block;
+	font-family: "PT Serif", serif;
+	font-size: 1em;
+	line-height: 180%;
+	text-indent: 1em;
+	margin: 0 0 0.0001pt;
+}
+.spacer {
+	display: block;
+	text-indent: 2em;
+    margin: 5pt 0 0 2em
+}
+.first {
+	text-indent: 0em;
+}
+.logo {
+	height: 65px;
+	line-height: 1.8;
+	width: 65px;
+}
+.center {
+	text-align: center;
+}
+img.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.epigrams {
+	font-size: 0.9em;
+	line-height: 150%;
+}
+.sans-serif body,
+.sans-serif section,
+.sans-serif h1,
+.sans-serif h2,
+.sans-serif h3,
+.sans-serif h4,
+.sans-serif p,
+.sans-serif blockquote {
+	font-family: "PT Sans", sans-serif;
+}
+a:visited {
+	color: purple;
+	text-decoration: underline;
+}
+a:link {
+	color: blue;
+	text-decoration: underline;
+}

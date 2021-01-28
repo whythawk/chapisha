@@ -1,0 +1,385 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>CreateWork &mdash; Chapisha 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="CreateWork" href="create_api.html" />
+    <link rel="prev" title="Dependencies, installation &amp; importing" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Chapisha
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Dependencies, installation &amp; importing</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Building a creative work as an epub</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">CreateWork</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#workflow">Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#build-your-work">Build your work</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#set-metadata">Set metadata</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#set-document">Set document</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#set-cover">Set cover</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#set-rights">Set rights</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#set-dedication">Set dedication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#build">Build</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#validate">Validate</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Reference API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="create_api.html">CreateWork</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Chapisha</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>CreateWork</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/create.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <span class="target" id="module-create.create"></span><span class="target" id="module-create"></span><div class="section" id="creatework">
+<h1>CreateWork<a class="headerlink" href="#creatework" title="Permalink to this headline">¶</a></h1>
+<p>Publish a standards compliant EPUB3 creative work from a source Microsoft Word <cite>docx</cite> document, and define its
+metadata, cover and publishing rights.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This process will overwrite any existing EPUB3 file of the same name, if it already exists.</p>
+</div>
+<div class="section" id="workflow">
+<h2>Workflow<a class="headerlink" href="#workflow" title="Permalink to this headline">¶</a></h2>
+<p>The publication process runs as follows:</p>
+<ul class="simple">
+<li><p>Set the working directory on creation,</p></li>
+<li><p>Define and validate the metadata required for the creative work,</p></li>
+<li><p>Copy the <cite>docx</cite> file to import into the working directory,</p></li>
+<li><p>Copy the cover image to import into the working directory,</p></li>
+<li><p>Define the creative work’s publication rights,</p></li>
+<li><p>Add in an optional dedication,</p></li>
+<li><p>Build the creative work,</p></li>
+<li><p>Validate the work is EPUB3 standards compliant.</p></li>
+</ul>
+<p>The objective of the workflow is to support what may be a stateless process i.e. the individual steps first bring all
+the data required to produce the creative work into a project directory, and then produces it. State does not need
+to be maintained between steps.</p>
+</div>
+<div class="section" id="build-your-work">
+<h2>Build your work<a class="headerlink" href="#build-your-work" title="Permalink to this headline">¶</a></h2>
+<p>Import <strong>Chapisha</strong> and create a work:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">chapisha.create</span> <span class="kn">import</span> <span class="n">CreateWork</span>
+
+<span class="n">work</span> <span class="o">=</span> <span class="n">CreateWork</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Where <cite>directory</cite> is the complete path to where you would like the EPUB created.</p>
+<div class="section" id="set-metadata">
+<h3>Set metadata<a class="headerlink" href="#set-metadata" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://www.dublincore.org/specifications/dublin-core/dces/">Dublin Core</a> is a vocabulary of fifteen properties for
+use in resource description. Three of them - <cite>title</cite>, <cite>identifier</cite> and <cite>language</cite> - are required. The <cite>language</cite> code
+is defined by the <a class="reference external" href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">ISO 679-1</a> standard (e.g. <cite>en</cite> for English,
+or <cite>fr</cite> for French).</p>
+<p>The official properties:</p>
+<ul class="simple">
+<li><p><cite>identifier</cite>: UUID, DOI or ISBN of the creative work. A UUID be generated if not included.</p></li>
+<li><p><cite>title</cite>: Name given to the creative work.</p></li>
+<li><p><cite>language</cite>: Specify the language of the creative work. Two letter code defined by ISO 639-1.</p></li>
+<li><p><cite>creator</cite>: Name of a person, organisation, etc. responsible for the creation of the work. May be more than one.</p></li>
+<li><p><cite>contributor</cite>: Name of a person, organisation, etc. that played a secondary role - such as an editor - in the creation of the work. May be more than one.</p></li>
+<li><p><cite>date</cite>: The publication date of the creative work. Provide in ISO format, YYYY-MM-DD.</p></li>
+<li><p><cite>subject</cite>: The subject, or tag, of the creative work. May be more than one.</p></li>
+<li><p><cite>publisher</cite>: Name of a person, organisation, etc.  responsible for making the creative work available.</p></li>
+<li><p><cite>rights</cite>: Information about copyright held in and over the creative work. Formatted as you wish it to appear.</p></li>
+</ul>
+<p>In addition, you can provide a small number of properties to be included on the rights plate:</p>
+<ul class="simple">
+<li><p><cite>description</cite>: The pitch, or jacket-cover, description of the creative work.</p></li>
+<li><p><cite>work_uri</cite>: The URI for your creative work.</p></li>
+<li><p><cite>publisher_uri</cite>: The URI for the publisher of your creative work.</p></li>
+</ul>
+<p>Create a paired list of these properties, along with the value of each. As example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="s2">&quot;term&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;term&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;term&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>e.g.:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Our Memory Like Dust&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;creator&quot;</span><span class="p">:</span> <span class="s2">&quot;Gavin Chait&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;identifier&quot;</span><span class="p">:</span> <span class="s2">&quot;isbn:9780993191459&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="s2">&quot;2017-07-28]]</span>
+</pre></div>
+</div>
+<p>Set the metadata:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">work</span><span class="o">.</span><span class="n">set_metadata</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="set-document">
+<h3>Set document<a class="headerlink" href="#set-document" title="Permalink to this headline">¶</a></h3>
+<p>Most writers still use <a class="reference external" href="https://www.microsoft.com/en-us/microsoft-365/word">Microsoft Word</a> as their default work tool.
+There are certainly other word processors, but this is the one most people will work with if they intend to be
+professionally published as publishers still expect Word <cite>docx</cite> files for editing and markup.</p>
+<p><strong>Chapisha</strong> will create your cover, rights and dedication pages, as well as the table of contents. Your <cite>docx</cite> file
+must contain <strong>only</strong> the creative content you wish included in that table of contents. Your document must also be
+correctly marked up to ensure proper chapter creation.</p>
+<p>EPUB documents will be read on multiple and diverse electronic devices. Don’t have any expectations for page
+number-dependant formatting. Instead:</p>
+<ul class="simple">
+<li><p>Each chapter must have a title, formatted as <cite>Heading 1</cite>, with lower-level headings formatted for each heading type.</p></li>
+<li><p>There must be no title page, contents, or anything else. Chapter 1 starts at the top of the first line of the document.</p></li>
+<li><p>Page numbers and other page-specific information will be lost.</p></li>
+<li><p>Fonts or typographic formats and alignment will be lost, although <cite>bold</cite> and <cite>italics</cite> will be maintained.</p></li>
+<li><p>Images will be maintained.</p></li>
+</ul>
+<p>Once the work is built you can enhance its styling. However, there are still limits in the EPUB3 standard in comparison
+to a printed work.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">work</span><span class="o">.</span><span class="n">set_document</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Where <cite>source</cite> is the complete path to the source <cite>docx</cite> file.</p>
+</div>
+<div class="section" id="set-cover">
+<h3>Set cover<a class="headerlink" href="#set-cover" title="Permalink to this headline">¶</a></h3>
+<p>There is, unfortunately, no standardisation on the image size, dimensions or resolution required for an EPUB. However,
+a recommendation is an image (<cite>.jpeg</cite>, <cite>.jpg</cite> or <cite>.png</cite>) of 1,600 by 2,400 pixels, and less than 5Mb is size. You will
+need to create your image (or have someone create it for you) exactly as you wish it to appear on the cover. Nothing
+will be added, removed, or changed.</p>
+<p>Please also ensure you have the appropriate rights to use the image on your cover. There are more than sufficient
+services providing openly-licenced, or even public domain, work for you to use.</p>
+<p>Include the exact phrasing of the rights information as you set the cover.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">work</span><span class="o">.</span><span class="n">set_cover</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">rights</span><span class="o">=</span><span class="s2">&quot;Cover image copyright .....&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Where <cite>source</cite> is the complete path to the image file.</p>
+</div>
+<div class="section" id="set-rights">
+<h3>Set rights<a class="headerlink" href="#set-rights" title="Permalink to this headline">¶</a></h3>
+<p>There are obviously a broad range of rights with which you can release your creative work. For the moment, <strong>Chapisha</strong>
+supports only two of these:</p>
+<ul class="simple">
+<li><p>Commercial copyright with all rights reserved.</p></li>
+<li><p>Commercial copyright but licenced for distribution under Attribution-NonCommercial-ShareAlike 4.0 International (<a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>).</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">work</span><span class="o">.</span><span class="n">set_rights</span><span class="p">(</span><span class="n">rights</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Where <cite>True</cite> is all rights reserved, and <cite>False</cite> is CC BY-NC-SA 4.0.</p>
+</div>
+<div class="section" id="set-dedication">
+<h3>Set dedication<a class="headerlink" href="#set-dedication" title="Permalink to this headline">¶</a></h3>
+<p>Most creators have a dedication for their work in mind - usually to apologise for all the late nights and impoverishing
+returns on their creative efforts.</p>
+<p>This is optional, but you can include a dedication page.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dedication</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;For those who leave.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;For those who remain.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;For the wings and tail.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;But most, for her&quot;</span>
+<span class="p">]</span>
+<span class="n">work</span><span class="o">.</span><span class="n">set_dedication</span><span class="p">(</span><span class="n">dedication</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The dedication can be one line of text, or several. If several, each line must be provided as a separate term in a <cite>list</cite>.</p>
+</div>
+<div class="section" id="build">
+<h3>Build<a class="headerlink" href="#build" title="Permalink to this headline">¶</a></h3>
+<p>The build function is straightforward. Once everything is in place:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">work</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>You will find your EPUB in the directory you specified.</p>
+</div>
+<div class="section" id="validate">
+<h3>Validate<a class="headerlink" href="#validate" title="Permalink to this headline">¶</a></h3>
+<p>If you have any doubts as to whether your EPUB is standards compliant, run the validation. This tests the <cite>epub</cite> file
+against the standards maintained by the <a class="reference external" href="http://validator.idpf.org/">DAISY Consortium</a>. You can check the file online
+at that link. It’s the same test.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">work</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Output will be <cite>True</cite> or <cite>False</cite>.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="create_api.html" class="btn btn-neutral float-right" title="CreateWork" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="installation.html" class="btn btn-neutral float-left" title="Dependencies, installation &amp; importing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Gavin Chait.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

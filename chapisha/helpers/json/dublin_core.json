@@ -1,0 +1,49 @@
+{
+	"fields": [
+		{
+			"name": "identifier",
+			"description": "UUID, DOI or ISBN of the creative work. A UUID be generated if not included.",
+			"unique": true
+		},
+		{
+			"name": "title",
+			"description": "Name given to the creative work.",
+			"unique": true
+		},
+		{
+			"name": "language",
+			"description": "Specify the language of the creative work. Two letter code defined by ISO 639-1.",
+			"unique": true
+		},
+		{
+			"name": "creator",
+			"description": "Name of a person, organisation, etc. responsible for the creation of the work. May be more than one.",
+			"unique": false
+		},
+		{
+			"name": "contributor",
+			"description": "Name of a person, organisation, etc. that played a secondary role - such as an editor - in the creation of the work. May be more than one.",
+			"unique": false
+		},
+		{
+			"name": "date",
+			"description": "The publication date of the creative work. Provide in ISO format, YYYY-MM-DD.",
+			"unique": true
+		},
+		{
+			"name": "subject",
+			"description": "The subject, or tag, of the creative work. May be more than one.",
+			"unique": false
+		},
+		{
+			"name": "publisher",
+			"description": "Name of a person, organisation, etc. responsible for making the creative work available.",
+			"unique": true
+		},
+		{
+			"name": "rights",
+			"description": "Information about copyright held in and over the creative work. Formatted as you wish it to appear.",
+			"unique": true
+		}
+	]
+}
