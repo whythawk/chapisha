@@ -8,3 +8,5 @@ else:
     from .helpers import common
     from .create.create import CreateWork
 __version__ = '0.1.0'
+sys.path.append('../..')
+sys.path.append('..')  # << Is needed; Otherwise not found within Sphinx
