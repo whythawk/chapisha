@@ -12,12 +12,19 @@
 #
 import os
 import sys
+import tomlkit
 sys.path.insert(0, os.path.abspath('.'))
 sys.path.insert(0, os.path.abspath('../'))
 sys.path.insert(0, os.path.abspath('../chapisha/'))
 sys.path.insert(0, os.path.abspath('../..'))
 sys.path.insert(0, os.path.abspath('./../..'))
 
+# https://github.com/wemake-services/wemake-python-styleguide/blob/master/docs/conf.py#L22-L37
+def _get_project_meta():
+    with open("../pyproject.toml") as pyproject:
+        file_contents = pyproject.read()
+
+    return tomlkit.parse(file_contents)["tool"]["poetry"]
 
 # -- Project information -----------------------------------------------------
 
