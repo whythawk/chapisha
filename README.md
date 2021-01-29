@@ -1,5 +1,7 @@
 # Chapisha: docx to standards-compliant epub3 conversion
 
+[![Documentation Status](https://readthedocs.org/projects/chapisha/badge/?version=latest)](https://chapisha.readthedocs.io/en/latest/?badge=latest)
+
 ## What is it?
 
 **Chapisha** provides an intuitive method for converting a well-formatted Microsoft Word `.docx` file into a 
