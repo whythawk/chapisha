@@ -1,8 +1,25 @@
 [tool.poetry]
 name = "chapisha"
 version = "0.1.0"
-description = "Chapisha: Docx, HTML, MarkDown, EPUB3 conversion"
+description = "Chapisha: docx to standards-compliant epub3 conversion"
 authors = ["Gavin Chait <gchait@whythawk.com>"]
+license = "BSD-3-Clause"
+readme = "README.md"
+homepage = "https://github.com/whythawk/chapisha"
+repository = "https://github.com/whythawk/chapisha"
+documentation = "https://chapisha.readthedocs.io/"
+keywords = ["python3", "epub-generation", "epub3", "docx-to-epub"]
+classifiers = [
+    "Topic :: Text Processing",
+    "Topic :: Text Processing :: General"
+]
+include = [
+    "chapisha/helpers/css/*",
+    "chapisha/helpers/fonts/*",
+    "chapisha/helpers/images/*",
+    "chapisha/helpers/json/*",
+    "tests/data/*"
+]
 
 [tool.poetry.dependencies]
 python = "^3.9.1"

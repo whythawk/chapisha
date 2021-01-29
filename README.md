@@ -45,9 +45,10 @@ The version history can be found in the [changelog](https://github.com/whythawk/
 
 ## Background
 
-**Chapisha** was created to serve my needs as both a formally, and self-published, author. I have written two novels
-- [Lament for the fallen](https://gavinchait.com/lament-for-the-fallen/) and [Our memory like dust](https://gavinchait.com/our-memory-like-dust/), 
-and a number of [short stories](https://gavinchait.com/). These works are available to read online, and to download
+**Chapisha** was created to serve my needs as both a formally, and self-published, author. I have written two 
+novels - [Lament for the fallen](https://gavinchait.com/lament-for-the-fallen/) and 
+[Our memory like dust](https://gavinchait.com/our-memory-like-dust/) - and a number of 
+[short stories](https://gavinchait.com/). These works are available to read online, and to download
 as an ebook.
 
 [Chapisha](https://glosbe.com/sw/en/-chapisha) is the *Swahili* word for 'publish' or 'post'.

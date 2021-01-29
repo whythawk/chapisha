@@ -49,16 +49,19 @@ Licence
 
    installation
 
+
 .. toctree::
    :maxdepth: 2
    :caption: Building a creative work as an epub
 
    create
 
+
 .. toctree::
    :caption: Reference API
 
    create_api
+
 
 Indices and tables
 ==================
