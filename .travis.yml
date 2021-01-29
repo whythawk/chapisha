@@ -5,6 +5,8 @@ python:
   - "3.9"
 # command to install dependencies
 before_install:
+  - sudo apt-get update
+  - sudo apt-get -y install pandoc default-jre
   - pip install poetry
 install:
   - poetry install
