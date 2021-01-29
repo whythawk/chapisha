@@ -23,7 +23,6 @@ include = [
 
 [tool.poetry.dependencies]
 python = "^3.9.1"
-PyDocX = "^0.9.10"
 beautifulsoup4 = "^4.9.3"
 pypandoc = "^1.5"
 EbookLib = "^0.17.1"
