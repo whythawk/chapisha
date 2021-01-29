@@ -501,7 +501,7 @@ class CreateWork:
             "--toc"
         ]
         pypandoc.convert_file(self.directory + self.s["files"]["docx"], 
-                    format="docx+styles",
+                    format="docx",
                     to="epub3", 
                     extra_args=extra_args,
                     outputfile=work_path)
