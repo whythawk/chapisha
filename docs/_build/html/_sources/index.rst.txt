@@ -42,13 +42,13 @@ Licence
 
 * `Samara logo <chapisha/helpers/images/logo.png>`_ is copyright `Whythawk <https://whythawk.com>`_ and `Qwyre <https://gavinchait.com>`_.
 * `Cover photo <tests/data/cover.jpg>`_ is copyright Rodd Halstead, licenced under commercial terms to Whythawk, and used here for test purposes.
-* `Usan Abasi's Lament <tests/data/Usan Abasi’s Lament - ebook.docx>`_ is copyright Gavin Chait, licenced `CC BY-NC-SA 4.0 <https://creativecommons.org/licenses/by-nc-sa/4.0/>`_ and used here for test purposes.
+* `Usan Abasi's Lament <tests/data/usan-abasis-lament.docx>`_ is copyright Gavin Chait, licenced `CC BY-NC-SA 4.0 <https://creativecommons.org/licenses/by-nc-sa/4.0/>`_ and used here for test purposes.
+
 
 .. toctree::
    :caption: Getting started
 
    installation
-
 
 
 .. toctree::
@@ -58,17 +58,13 @@ Licence
    create
 
 
-
 .. toctree::
    :caption: Reference API
 
    create_api
 
 
-
 Indices and tables
 ==================
 
 * :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
