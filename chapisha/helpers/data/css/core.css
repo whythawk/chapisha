@@ -1,0 +1,729 @@
+@charset "UTF-8";
+
+/*!
+    Chapisha CSS modified from:
+    Blitz — CSS framework for reflowable eBooks
+    Version 1.5.2 by Jiminy Panoz
+    Codename: Cool Under Heat
+    License: MIT (https://opensource.org/licenses/MIT)
+*/
+
+@namespace h "http://www.w3.org/1999/xhtml/";
+@namespace epub "http://www.idpf.org/2007/ops";
+@namespace svg "http://www.w3.org/2000/svg";
+
+/* RESET */
+address,
+article,
+aside,
+blockquote,
+canvas,
+dd,
+details,
+div,
+dl,
+dt,
+figcaption,
+figure,
+footer,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+header,
+hr,
+li,
+main,
+nav,
+ol,
+p,
+pre,
+section,
+summary,
+ul {
+    margin: 0;
+    padding: 0;
+    font-size: 1em;
+    line-height: inherit;
+    text-indent: 0;
+    font-style: normal;
+    font-weight: 400;
+}
+
+article,
+aside,
+figcaption,
+figure,
+footer,
+header,
+main,
+nav,
+section {
+    display: block;
+}
+
+[hidden] {
+    display: none;
+}
+
+dt,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre {
+    text-align: left;
+}
+
+nav[epub|type~=toc] ol {
+    list-style: none!important;
+}
+
+@media amzn-kf8,
+amzn-mobi {
+    nav ol {
+        list-style-type: none!important;
+    }
+}
+
+nav[epub|type~=landmarks],
+nav[epub|type~=page-list] {
+    display: none;
+}
+
+a,
+abbr,
+b,
+bdi,
+bdo,
+cite,
+code,
+data,
+del,
+dfn,
+em,
+i,
+ins,
+kbd,
+mark,
+q,
+rp,
+rt,
+rtc,
+ruby,
+s,
+samp,
+small,
+span,
+strong,
+sub,
+sup,
+time,
+var {
+    font-size: inherit;
+    vertical-align: baseline;
+    font-style: inherit;
+    font-weight: inherit;
+    color: inherit;
+    text-decoration: none;
+}
+
+q {
+    quotes: none;
+}
+
+body > :last-child,
+body > section > :last-child {
+    margin-bottom: 0;
+}
+
+/* DESIGN */
+@page {
+    margin: 30px 30px 20px 30px;
+    padding: 0;
+}
+
+@font-face {
+    font-family: "PT Serif";
+    font-weight: normal;
+    font-style: normal;
+    src: url(../fonts/PT-Serif.ttf);
+}
+
+@font-face {
+    font-family: "PT Serif";
+    font-weight: normal;
+    font-style: italic;
+    src: url(../fonts/PT-Serif-Italic.ttf);
+}
+
+@font-face {
+    font-family: "PT Serif";
+    font-weight: bold;
+    font-style: normal;
+    src: url(../fonts/PT-Serif-Bold.ttf);
+}
+
+@font-face {
+    font-family: "PT Sans";
+    font-weight: normal;
+    font-style: normal;
+    src: url(../fonts/PT-Sans.ttf);
+}
+
+@font-face {
+    font-family: "PT Sans";
+    font-weight: normal;
+    font-style: italic;
+    src: url(../fonts/PT-Sans-Italic.ttf);
+}
+
+@font-face {
+    font-family: "PT Sans";
+    font-weight: bold;
+    font-style: normal;
+    src: url(../fonts/PT-Sans-Bold.ttf);
+}
+
+body {
+    font-family: "PT Serif", serif;
+    font-size: 100%;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    widows: 2;
+    orphans: 2;
+    hyphens: auto;
+    adobe-hyphenate: auto;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -epub-hyphens: auto;
+}
+
+.align-center,
+.align-left,
+.align-right,
+.caption,
+.no-hyphens,
+address,
+blockquote p cite,
+caption,
+dt,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+header,
+pre,
+table,
+td,
+th {
+    adobe-hyphenate: none;
+    -ms-hyphens: none;
+    -moz-hyphens: none;
+    -webkit-hyphens: none;
+    -epub-hyphens: none;
+    hyphens: none
+}
+
+dt,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+header,
+hr {
+    adobe-text-layout: optimizeSpeed; /* For Nook */
+    page-break-inside: avoid;
+    break-inside: avoid;
+    page-break-after: avoid;
+    break-after: avoid;
+}
+
+@media amzn-kf8 {
+    dt,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    hr {
+        page-break-inside: auto;
+        break-inside: auto;
+    }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hgroup{
+    adobe-hyphenate: none;
+    text-align: center;
+    margin-top: 3em;
+    margin-right: 0;
+    margin-bottom: 3em;
+    margin-left: 0;
+}
+
+hgroup > *{
+    font-weight: normal;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+}
+
+p {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    text-indent: 1em;
+}
+
+p.continued,
+h1 + p,
+h2 + p,
+h3 + p,
+h4 + p,
+h5 + p,
+h6 + p,
+header + p,
+hr + p,
+hgroup + p,
+p.first-child,
+p:first-child{
+    hanging-punctuation: first last;
+    text-indent: 0;
+}
+
+h1 {
+    font-size: 1.8em;
+}
+
+@media amzn-kf8 {
+    h1 {
+        line-height: 1.2;
+    }
+}
+
+@media amzn-mobi {
+    h1 {
+        font-size: xx-large;
+        margin: 0 0 3em 0;
+    }
+}
+
+h2 {
+    font-size: 1.3125em;
+    line-height: 1.14285714;
+    margin-top: 2.28571429em;
+    margin-bottom: 1.14285714em
+}
+
+@media amzn-kf8 {
+    h2 {
+        line-height: 1.2;
+    }
+}
+
+@media amzn-mobi {
+    h2 {
+        font-size: x-large;
+        margin: 2em 0 1em 0;
+    }
+}
+
+h3 {
+    font-size: 1.125em;
+    line-height: 1.33333333;
+    margin-top: 1.33333333em;
+    margin-bottom: 1.33333333em;
+}
+
+@media amzn-mobi {
+    h3 {
+        font-size: large;
+        margin: 1em 0;
+    }
+}
+
+h4 {
+    font-size: 1em;
+    line-height: 1.5;
+    margin-top: 1.5em;
+    margin-bottom: 0;
+}
+
+@media amzn-mobi {
+    h4 {
+        font-size: medium;
+        margin: 1em 0 0 0;
+    }
+}
+
+header{
+	text-align: center;
+}
+
+header > * + p{
+	text-indent: 0;
+}
+
+article > header + *,
+section > header + *{
+	margin-top: 3em;
+}
+
+.footnote {
+    font-size: .9375em;
+    line-height: 1.6;
+    text-indent: 0;
+}
+
+@media amzn-mobi {
+    .footnote {
+        font-size: medium;
+    }
+}
+
+blockquote {
+    margin: 1.5em 5%;
+    display: block;
+    font-style: italic;
+    text-indent: 2em;
+}
+
+blockquote p:first-child  {
+    text-indent: 1em; /* No, I have no idea why this works. */
+}
+
+@media amzn-mobi {
+    blockquote {
+        margin: 1em 5%;
+    }
+}
+
+a {
+    text-decoration: underline;
+    font-weight: 700;
+    color: inherit;
+    -webkit-text-fill-color: inherit
+}
+
+cite,
+dfn,
+em,
+i {
+    font-style: italic;
+}
+
+cite cite,
+cite dfn,
+cite em,
+cite i,
+dfn cite,
+dfn dfn,
+dfn em,
+dfn i,
+em cite,
+em dfn,
+em em,
+em i,
+i cite,
+i dfn,
+i em,
+i i {
+    font-style: normal;
+}
+
+b,
+strong {
+    font-weight: 700;
+}
+
+del,
+s {
+    text-decoration: line-through;
+}
+
+mark {
+    background-color: #ff0;
+    color: inherit;
+}
+
+small {
+    font-size: .8125em;
+}
+
+@media amzn-mobi {
+    small {
+        font-size: small;
+    }
+}
+
+sub {
+    font-size: 75%;
+    line-height: 1.2;
+    vertical-align: sub;
+    vertical-align: -20%
+}
+
+@media amzn-mobi {
+    sub {
+        font-size: x-small;
+    }
+}
+sup {
+    font-size: 75%;
+    line-height: 1.2;
+    vertical-align: super;
+    vertical-align: 33%;
+}
+
+@media amzn-mobi {
+    sup {
+        font-size: x-small;
+    }
+}
+
+rt {
+    font-size: 50%;
+    text-transform: full-size-kana;
+}
+
+figure {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    margin: 1.5em 0;
+}
+
+@media amzn-kf8 {
+    figure {
+        page-break-inside: auto;
+        break-inside: auto;
+    }
+}
+
+.caption,
+figcaption {
+    font-size: .9375em;
+    line-height: 1.6;
+    text-indent: 0;
+}
+
+img {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    vertical-align: bottom
+}
+
+img.portrait {
+    width: auto;
+    max-width: 100%;
+    height: 100%;
+    max-height: 95%;
+}
+
+img.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.float-left img,
+.float-right img {
+    width: 100%;
+}
+
+/* STANDARD EDITIONS */
+a[epub|type~="noteref"]{
+	font-size: .75em;
+	font-style: normal !important;
+	vertical-align: super;
+}
+
+section[epub|type~="endnotes"] > ol > li{
+	margin: 1em 0;
+}
+
+@media all and (prefers-color-scheme: dark){
+	img[epub|type~="image.color-depth.black-on-transparent"]{
+		filter: invert(100%);
+	}
+}
+
+.logo {
+	height: 65px;
+	line-height: 1.8;
+	width: 65px;
+}
+
+img.epub-type-z3998-publisher-logo{
+	width: 222px;
+}
+
+/* Give PNGs a white background for night mode compatibility... */
+img.epub-type-se-image-color-depth-black-on-transparent{
+	background: #fff !important;
+}
+
+/* Or if the device supports prefers-color-scheme. We’ll invert the image in core.css. RMSDK requires a target media as well as a state. */
+@media all and (prefers-color-scheme){
+	img.epub-type-se-image-color-depth-black-on-transparent{
+		background: transparent !important;
+	}
+}
+
+/* Help preserve poetry formatting after Kobo adds its special <span>s */
+.epub-type-z3998-poem p span.koboSpan,
+.epub-type-z3998-song p span.koboSpan,
+.epub-type-z3998-verse p span.koboSpan{
+	display: inline !important;
+	text-indent: 0 !important;
+	padding-left: 0 !important;
+}
+
+@supports (height:99vh) {
+    img.portrait {
+        height: 99vh;
+    }
+}
+
+hr{
+	border: none;
+	border-top: 1px solid;
+	height: 0;
+	margin: 1.5em auto;
+	width: 25%;
+}
+
+q::before,
+q::after{
+	content: "";
+}
+
+.sans-serif body,
+.sans-serif section,
+.sans-serif h1,
+.sans-serif h2,
+.sans-serif h3,
+.sans-serif h4,
+.sans-serif p,
+.sans-serif blockquote {
+	font-family: "PT Sans", sans-serif;
+}
+
+/* SECTIONS */
+section[epub|type~="titlepage"] img{
+	display: block;
+	width: 100%;
+	margin: 3em auto auto auto;
+}
+
+section[epub|type~="colophon"],
+section[epub|type~="dedication"],
+section[epub|type~="imprint"]{
+	text-align: center;
+}
+
+section[epub|type~="colophon"] header,
+section[epub|type~="imprint"] header{
+	line-height: 0;
+	margin-top: 3em;
+}
+
+section[epub|type~="colophon"] h2,
+section[epub|type~="imprint"] h2{
+	display: none;
+}
+
+img[epub|type~="z3998:publisher-logo"]{
+	max-width: 25%;
+}
+
+section[epub|type~="colophon"] p,
+section[epub|type~="dedication"] p,
+section[epub|type~="imprint"] p{
+	margin: 1em auto 0 auto;
+	text-indent: 0;
+}
+
+section[epub|type~="imprint"] p{
+	font-size: .75em;
+	text-align: justify;
+	width: 75%;
+}
+
+section[epub|type~="colophon"] p + p::before{
+	content: "";
+	display: block;
+	margin: auto auto 1em auto;
+	width: 25%;
+}
+
+section[epub|type~="colophon"] a{
+	font-variant: small-caps;
+}
+
+section[epub|type~="imprint"] a,
+section[epub|type~="colophon"] a{
+	hyphens: none;
+	-epub-hyphens: none;
+}
+
+section[epub|type~="copyright-page"] p{
+	margin: 1em auto;
+	text-indent: 0;
+}
+
+section[epub|type~="copyright-page"] blockquote p{
+	font-style: italic;
+	text-align: initial;
+	text-indent: 0;
+}
+
+section[epub|type~="copyright-page"] blockquote p span{
+	display: block;
+	padding-left: 1em;
+	text-indent: -1em;
+}
+
+section[epub|type~="copyright-page"] blockquote br{
+	display: none;
+}
+
+@supports(display: flex){
+	section[epub|type~="imprint"]{
+		align-content: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		min-height: calc(98vh - 3em);
+		padding-top: 3em;
+	}
+
+	section[epub|type~="imprint"] header{
+		margin-bottom: 2em;
+		margin-top: 0;
+	}
+
+	img[epub|type~="z3998:publisher-logo"]{
+		max-width: 25vw;
+	}
+}

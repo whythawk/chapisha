@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ONIXMessage xmlns="http://ns.editeur.org/onix/3.0/reference" release="3.0">
+	<Header>
+		<Sender>
+			<SenderName>Chapisha ebook generator</SenderName>
+		</Sender>
+		<SentDateTime></SentDateTime>
+	</Header>
+	<Product>
+		<DescriptiveDetail>
+			<ProductComposition>00</ProductComposition>
+			<ProductForm>EB</ProductForm>
+			<ProductFormDetail>E101</ProductFormDetail>
+			<TitleDetail>
+				<!--Title of the creative work-->
+				<TitleType>01</TitleType>
+				<TitleElement>
+					<TitleElementLevel>01</TitleElementLevel>
+					<TitleText></TitleText>
+				</TitleElement>
+			</TitleDetail>
+			<Contributor>
+				<!--Name of the author of the creative work-->
+				<SequenceNumber>1</SequenceNumber>
+				<ContributorRole>A01</ContributorRole>
+				<PersonName></PersonName>
+			</Contributor>
+			<EditionType>DGO</EditionType>
+			<ProductFormFeature>
+				<!--No reading system accessibility options disabled-->
+				<ProductFormFeatureType>09</ProductFormFeatureType>
+				<ProductFormFeatureValue>10</ProductFormFeatureValue>
+			</ProductFormFeature>
+			<ProductFormFeature>
+				<!--Table of contents navigation-->
+				<ProductFormFeatureType>09</ProductFormFeatureType>
+				<ProductFormFeatureValue>11</ProductFormFeatureValue>
+			</ProductFormFeature>
+			<ProductFormFeature>
+				<!--Reading order-->
+				<ProductFormFeatureType>09</ProductFormFeatureType>
+				<ProductFormFeatureValue>13</ProductFormFeatureValue>
+			</ProductFormFeature>
+			<ProductFormFeature>
+				<!--Short alternative descriptions-->
+				<ProductFormFeatureType>09</ProductFormFeatureType>
+				<ProductFormFeatureValue>14</ProductFormFeatureValue>
+			</ProductFormFeature>
+			<ProductFormFeature>
+				<!--Language tagging provided-->
+				<ProductFormFeatureType>09</ProductFormFeatureType>
+				<ProductFormFeatureValue>22</ProductFormFeatureValue>
+			</ProductFormFeature>
+		</DescriptiveDetail>
+		<CollateralDetail>
+			<TextContent>
+				<!--Description of the creative work-->
+				<TextType>03</TextType>
+				<ContentAudience>00</ContentAudience>
+				<Text></Text>
+			</TextContent>
+		</CollateralDetail>
+	</Product>
+</ONIXMessage>

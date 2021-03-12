@@ -8,7 +8,8 @@ CreateWork
 ==========
 
 Publish a standards compliant EPUB3 creative work from a source Microsoft Word `docx` document, and define its 
-metadata, cover and publishing rights. 
+metadata, cover and publishing rights. Currently does not support `odt` since `Pandoc` seems to lose any embedded
+graphics.
 
 .. note:: This process will overwrite any existing EPUB3 file of the same name, if it already exists.
 
@@ -21,7 +22,8 @@ The publication process runs as follows:
 * Define and validate the metadata required for the creative work,
 * Copy the `docx` file to import into the working directory,
 * Copy the cover image to import into the working directory,
-* Define the creative work's publication rights,
+* Define and add any contributors, such as cover artist,
+* Update the creative work's publication rights,
 * Add in an optional dedication,
 * Build the creative work,
 * Validate the work is EPUB3 standards compliant.
@@ -69,23 +71,29 @@ In addition, you can provide a small number of properties to be included on the 
 * `work_uri`: The URI for your creative work.
 * `publisher_uri`: The URI for the publisher of your creative work.
 
-Create a paired list of these properties, along with the value of each. As example:
+Create a paired dictionary of these properties. As example:
 
 .. code-block:: python
 
-    [["term", "value"], ["term", "value"], ["term", "value"]]
-
-e.g.:
-
-.. code-block:: python
-
-    [["title": "Our Memory Like Dust"], ["creator": "Gavin Chait"], ["identifier": "isbn:9780993191459"], ["date", "2017-07-28]]
+    METADATA = {
+        "identifier": "isbn:9780993191459",
+        "title": "Usan Abasi's Lament",
+        "description": "Years after the events of \"Lament for the Fallen\", Isaiah tells of the myth of Usan Abasi, who was punished by the Sky God to spend eternity in the form of a brass bowl and imprisoned within a vast termite mountain. Now the ceremony which ensures that Usan Abasi remains dormant has failed, and his ancient evil awakes. A free, stand-alone short-story set in the city of Ewuru and linking \"Lament for the Fallen\" to a forthcoming novel.",
+        "language": "en",
+        "creator": ["Gavin Chait"],
+        "rights": ["The right of the creator to be identified as the author of the Work has been asserted by them in accordance with the Copyright, Designs and Patents Act 1988. This creator supports copyright. Copyright gives creators space to explore and provides for their long-term ability to sustain themselves from their work. Thank you for buying this work and for complying with copyright laws by not reproducing, scanning, or distributing any part of it without permission. Your support will contribute to future works by the creator."],
+        "publisher": "Qwyre Publishing",
+        "publisher_uri": "https://qwyre.com",
+        "work-uri": "https://gavinchait.com",
+        "date": "2017-07-23",
+        "subject": ["science fiction", "african mythology"]
+    }
 
 Set the metadata:
 
 .. code-block:: python
 
-    work.set_metadata(metadata)
+    work.set_metadata(METADATA)
 
 Set document
 ^^^^^^^^^^^^
@@ -127,13 +135,47 @@ will be added, removed, or changed.
 Please also ensure you have the appropriate rights to use the image on your cover. There are more than sufficient 
 services providing openly-licenced, or even public domain, work for you to use. 
 
-Include the exact phrasing of the rights information as you set the cover.
+.. note:: You can optionally add the image contributor details here, or on the next step. Do not do it in both or the contributor information will be repeated.
+
+Example code:
 
 .. code-block:: python
 
-    work.set_cover(source, rights="Cover image copyright .....")
+    CONTRIBUTOR = {
+        "id": "artist", 
+        "name": "Rodd Halstead", 
+        "terms": "Cover image 'Red Maple Fruit (Samara)' photograph. All rights reserved. Used under licence.", 
+        "year": "2006"
+    }
+
+    work.set_cover(source, contributor=CONTRIBUTOR)
 
 Where `source` is the complete path to the image file.
+
+Add contributors
+^^^^^^^^^^^^^^^^
+
+You may have numerous contributors you wish to acknowledge. Fields are:
+
+* `id_`: Contributor identity, based on a specified list of `artist`, `editor` or `translator`.
+* `name`: Name of a person, organisation, etc. that played a secondary role - such as an editor - in the creation of the work.
+* `terms`: Information about copyright held by the rights-holder in and over their contribution to the creative work. Formatted as you wish it to appear.
+* `year`: The year of the contribution or publication of the contributor's work.
+
+Example code:
+
+.. code-block:: python
+
+    CONTRIBUTOR = {
+        "id": "artist", 
+        "name": "Rodd Halstead", 
+        "terms": "Cover image 'Red Maple Fruit (Samara)' photograph. All rights reserved. Used under licence.", 
+        "year": "2006"
+    }
+
+    work.add_contributor(CONTRIBUTOR)
+
+`add_contributor` as many times as you have people or organisations to acknowledge.
 
 Set rights
 ^^^^^^^^^^
@@ -141,14 +183,41 @@ Set rights
 There are obviously a broad range of rights with which you can release your creative work. For the moment, **Chapisha**
 supports only two of these:
 
-* Commercial copyright with all rights reserved.
-* Commercial copyright but licenced for distribution under Attribution-NonCommercial-ShareAlike 4.0 International (`CC BY-NC-SA 4.0 <https://creativecommons.org/licenses/by-nc-sa/4.0/>`_).
+There are multiple appropriate rights, and two examples are below. Modify as you require.
+
+* Commercial copyright with all rights reserved:
+
+    The right of the creator to be identified as the author of the Work has been asserted by them in 
+    accordance with the Copyright, Designs and Patents Act 1988. This creator supports copyright. Copyright 
+    gives creators space to explore and provides for their long-term ability to sustain themselves from 
+    their work. Thank you for buying this work and for complying with copyright laws by not reproducing, 
+    scanning, or distributing any part of it without permission. Your support will contribute to future 
+    works by the creator.
+
+* Commercial copyright but licenced for distribution under Attribution-NonCommercial-ShareAlike 4.0 International (`CC BY-NC-SA 4.0 <https://creativecommons.org/licenses/by-nc-sa/4.0/>`_):
+
+    You are free to copy and redistribute the Work in any medium or format, and remix, transform, and build 
+    upon the Work. The creator cannot revoke these freedoms as long as you follow the license terms.
+    
+    In return: You may not use the material for commercial purposes. You must give appropriate credit, provide 
+    a link to this license, and indicate if changes were made. You may do so in any reasonable manner, but not
+    in any way that suggests the creator endorses you or your use. If you remix, transform, or build upon the 
+    material, you must distribute your contributions under the same license as the original. You may not apply 
+    legal terms or technological measures that legally restrict others from doing anything the license 
+    permits.
+
+Example code:
 
 .. code-block:: python
 
-    work.set_rights(rights=False)
+    RIGHTS = [
+        "You are free to copy and redistribute the Work in any medium or format, and remix, transform, and build upon the Work. The creator cannot revoke these freedoms as long as you follow the license terms.",
+        "In return: You may not use the material for commercial purposes. You must give appropriate credit, provide a link to this license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the creator endorses you or your use. If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original. You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits."
+    ]
 
-Where `True` is all rights reserved, and `False` is CC BY-NC-SA 4.0.
+    work.set_rights(RIGHTS)
+
+Rights terms can be one line of text, or several. If several, each line must be provided as a separate term in a `list`.
 
 Set dedication
 ^^^^^^^^^^^^^^
@@ -156,7 +225,7 @@ Set dedication
 Most creators have a dedication for their work in mind - usually to apologise for all the late nights and impoverishing
 returns on their creative efforts.
 
-This is optional, but you can include a dedication page.
+This is optional, but you can include a dedication page. Each item in the list will be set on a different paragraph.
 
 .. code-block:: python
 
@@ -193,19 +262,21 @@ at that link. It's the same test.
     work.validate()
 
 Output will be `True` or `False`.
+
 """
 
 import pypandoc
-import ebooklib
-from ebooklib import epub
 from bs4 import BeautifulSoup
 from epubcheck import EpubCheck
 from typing import Optional
 from urllib.parse import urlparse
 from pathlib import Path
 import os
+import filetype
 
-from chapisha.helpers import common as _c
+from ..models.metadata import WorkMetadata, Contributor
+from ..models.matter import Matter, MatterPartition
+from ..helpers import coreio as _c, pages, formats, UpdateZipFile
 
 class CreateWork:
     """
@@ -214,108 +285,82 @@ class CreateWork:
 
     If the EPUB file already exists, then publishing this work will overwrite it.
 
-    On instantiation, checks `directory` to see if `chapisha_settings.json` is present, loading the required data,
+    On instantiation, checks `directory` to see if `DEFAULT_METADATA_SETTINGS` is present, loading the required data,
     or replacing with specified defaults.
     """
 
-    def __init__(self, directory: Optional[str] = None):
-        self.directory = directory
-        if self.directory[-1] != "/": self.directory + "/"
+    def __init__(self, directory: Optional[str] = None, metadata: Optional[WorkMetadata] = None):
+        self.directory = Path(directory)
         _c.check_path(self.directory)
-        # Load settings file, if it exists
-        self.s = _c.get_work_settings(self.directory)
-        self.work = None
-        # Defaults
-        self.default_fonts_directory = str(_c.DEFAULT_FONT_DIRECTORY)
-        self.default_styles = str(_c.DEFAULT_STYLE_SHEET)
+        # Load metadata settings, if exists
+        try:
+            _c.check_source(self.directory / _c.DEFAULT_METADATA_SETTINGS)
+            self.metadata = WorkMetadata(_c.load_json(self.directory / _c.DEFAULT_METADATA_SETTINGS))
+            self.work_name = self.directory.name # Since will be `.../work-name/`
+        except FileNotFoundError:
+            self.metadata = None
+            self.work_name = None
+        # Construct the metadata, if it is provided
+        if metadata: self.set_metadata(**metadata)
+        self.source_path = _c.get_helper_path() / "data" 
 
     ############################################################################
     # GATHER WORKING DATA
     ############################################################################
 
-    def get_metadata_schema(self):
+    def get_metadata_schema(self) -> dict:
         """
         Return the standard Dublin Core schema permitted for the EPUB3 standard.
+
+        Returns
+        -------
+        dict
         """
-        return _c.get_metadata_schema()
+        return self.metadata.schema()
 
-    def set_metadata(self, metadata: Optional[list[list[str]]] = None) -> bool:
+    def set_metadata(self, metadata: WorkMetadata) -> bool:
         """
-        Validate metadata values for the permitted Dublin Core schema terms. Provide the terms as a list of the form:
+        Validate metadata values for the permitted Dublin Core schema terms, along with additional metadata. The full
+        schema, with descriptions, and requirements, is listed by `get_metadata_schema`.
 
-        .. code-block:: python
-
-            [["term", "value"], ["term", "value"], ["term", "value"]]
-
-        e.g.:
-
-        .. code-block:: python
-
-            [["title": "Our Memory Like Dust"], ["creator": "Gavin Chait"], ["identifier": "isbn:9780993191459"]]
-
-        Alternative, special-case, metadata that can be included in addition to Dublin Core, are:
-
-        * `description`: The pitch, or jacket-cover, description of the creative work
-        * `work_uri`: The URI for your creative work
-        * `publisher_uri`: The URI for the publisher of your creative work
-
-        .. note:: The terms `identifier`, `title` and `language` are required. Language can be guessed from the Docx, and a random UUID will be assigned if none is provided. A missing title will trigger an exception.
+        .. note:: The terms `identifier`, `title`, `creator`, `rights` and `language` are required. A random UUID will be assigned if none is provided.
 
         Parameters
         ----------
-        metadata: list of list of str
-            List of term, value pairs.
-
-        Raises
-        ------
-        KeyError: if missing title
+        metadata: WorkMetadata
+            A model defined by a dictionary of terms.
 
         Returns
         -------
         bool
         """
-        if not metadata and self.s["metadata"]["validated"]:
-            return True
-        metadata_settings = _c.get_metadata_settings()
-        uniques = []
-        for k, v in metadata:
-            if k in metadata_settings:
-                if metadata_settings[k] and k in uniques:
-                    # Must be unique
-                    e = F"Duplicated metadata term for `{k}`. Must be unique."
-                    raise KeyError(e)
-                uniques.append(k)
-            elif k in ["description", "work_uri", "publisher_uri"]:
-                # Terms used elsewhere
-                self.s["metadata"].update({k: v})
-            else:
-                e = F"Unknown metadata term `{k}`. `get_metadata_schema()` for permitted terms."
-                raise KeyError(e)
-            if k in ["title", "date", "publisher", "language"]: 
-                self.s["metadata"].update({k: v})
-            if k == "creator": 
-                self.s["metadata"]["creator"].append(v)
-        if not self.s["metadata"]["title"]:
-            e = "No `title` provided in metadata."
-            raise KeyError(e)
-        self.s["work_link"] = "-".join(["".join([e for e in w if e.isalnum()]) 
-                                for w in self.s["metadata"]["title"].lower().split(" ")])
-        self.s["metadata"]["terms"] = metadata
-        self.s["metadata"].update({"validated": True})
-        # Set the working director to `work_link`, if it isn't already, and save settings there
-        self.directory = F"{self.directory}{self.s['work_link']}/"
+        # Create a temporary WorkMetadata model to hold updated metadata
+        updated_metadata = WorkMetadata(**metadata)
+        # And update the original data
+        # https://fastapi.tiangolo.com/tutorial/body-updates/#partial-updates-with-patch
+        if self.metadata:
+            self.metadata = self.metadata.copy(update=updated_metadata.dict(exclude_unset=True))
+        else:
+            self.metadata = updated_metadata
+        work_name = "-".join(["".join([e for e in w if e.isalnum()]) 
+                               for w in self.metadata.title.lower().split(" ")])
+        # Set the working directory, if it isn't already, and save metadata there
+        if not self.work_name:
+            self.work_name = work_name
+            self.directory = self.directory / work_name
+        # Save the metadata to the working folder
         _c.check_path(self.directory)
-        _c.save_json(self.s, self.directory + _c.DEFAULT_PROJECT_SETTINGS, overwrite=True)
+        _c.save_json(self.metadata.dict(by_alias=True), self.directory / _c.DEFAULT_METADATA_SETTINGS, overwrite=True)
         return True
 
-    def _get_validated_bytes(self, source: str) -> bytes:
+    def _get_validated_bytes(self, source: [Path, bytes]) -> bytes:
         """
         Validate a source file, and return a bytes version.
 
         Parameters
         ----------
-        source: str
-            Filename to open, including path
+        source: Path or bytes
+            Filename to open, or bytes from an opened file
 
         Raises
         ------
@@ -326,10 +371,10 @@ class CreateWork:
         -------
         bytes
         """
-        if not self.s["metadata"]["validated"]:
+        if not self.metadata:
             e = "`set_metadata` before setting source document."
             raise PermissionError(e)
-        if isinstance(source, str):
+        if isinstance(source, Path):
             try:
                 _c.check_source(source)
                 with open(source, "rb") as f:
@@ -342,97 +387,88 @@ class CreateWork:
             raise FileNotFoundError(e)
         return source
 
-    def set_document(self, source: str):
+    def set_document(self, source: [Path, bytes]):
         """
         Import source `docx` document and save to the working directory..
 
         Parameters
         ----------
-        source: str or bytes
-            Filename to open, including path
+        source: Path or bytes
+            Filename to open, or bytes from an opened file
 
         Raises
         ------
         PermissionError: if metadata not yet validated.
         FileNotFoundError: if the source is not valid.
         """
+        if not self.work_name or not self.metadata:
+            e = "`set_metadata` before setting source document."
+            raise PermissionError(e)
         source = self._get_validated_bytes(source)
-        with open(self.directory + F"{self.s['work_link']}.docx", "wb") as w:
+        with open(self.directory / F"{self.work_name}.docx", "wb") as w:
             w.write(source)
-        self.s["files"].update({"docx": F"{self.s['work_link']}.docx"})
-        _c.save_json(self.s, self.directory + _c.DEFAULT_PROJECT_SETTINGS, overwrite=True)
 
     def set_cover(self, 
-                source: str,
-                rights: Optional[str] = None):
+                  source: [Path, bytes],
+                  contributor: Optional[Contributor] = None):
         """
-        Import cover image and save to the working directory, along with any rights information.
+        Import cover image and save to the working directory, along with any rights and contributor information.
 
         Parameters
         ----------
-        source: str or bytes
+        source: Path or bytes
             Filename to open, including path, or bytes for file
-        filetype: str
-            Image filetype, e.g. `jpg` or `png`
-        rights: str
-            Optional, text indicating attribution and rights for cover image.
+        contributor: Contributor
+            Optional, string indicating contributor name for cover image.
 
         Raises
         ------
         PermissionError: if metadata not yet validated.
         FileNotFoundError: if the source is not valid.
         """
-        if not self.s["metadata"]["validated"]:
+        if not self.work_name or not self.metadata:
             e = "`set_metadata` before setting cover."
             raise PermissionError(e)
-        filetype = source.split(".")[-1]
         source = self._get_validated_bytes(source)
-        with open(self.directory + F"cover.{filetype}", "wb") as w:
+        kind = filetype.guess(source).extension
+        with open(self.directory / F"cover.{kind}", "wb") as w:
             w.write(source)
-        self.s["files"].update({"cover": F"cover.{filetype}"})
-        if rights: self.s["rights"].update({"cover": rights})
-        _c.save_json(self.s, self.directory + _c.DEFAULT_PROJECT_SETTINGS, overwrite=True)
+        if contributor: 
+            if self.metadata.contributor is None:
+                self.metadata.contributor = []
+            self.metadata.contributor.append(Contributor(**contributor))
+        _c.save_json(self.metadata.dict(by_alias=True), self.directory / _c.DEFAULT_METADATA_SETTINGS, overwrite=True)
 
-    def set_rights(self, rights: bool = True):
+    def add_contributor(self, 
+                        contributor: Contributor):
         """
-        Set copyright page for creative work. Default rights are all rights reserved (copyright). May choose
-        to licence the work as Creative Commons under Attribution-NonCommercial-ShareAlike 4.0 International 
-        (CC BY-NC-SA 4.0).
+        Add a contributor to the list of those supporting the creation of the work. `contributor` is defined as a dict:
         
+        .. code-block:: python
+
+            contributor = {
+                "id": "artist",
+                "name": "Great Artist",
+                "year": "2021",
+                "terms": "Public Domain."
+            }
+
         Parameters
         ----------
-        rights: bool
-            True if copyright, False if Creative Commons (CC BY-NC-SA 4.0)
-        
+        contributor: Contributor
+            Include the types of contributor who supported the creation of the work. `id`: `artist`, `editor`, `translator`.
+
+        Raises
+        ------
+        PermissionError: if metadata not yet validated.
         """
-        if not self.s["metadata"]["validated"]:
-            e = "`set_metadata` before setting rights."
+        if not self.work_name or not self.metadata:
+            e = "`set_metadata` before adding contributors, or add the contributors when you set the metadata."
             raise PermissionError(e)
-        kwargs = {"rights": rights}
-        if self.s["metadata"].get("date"):
-            kwargs.update({"year": self.s["metadata"]["date"].split("-")[0]})
-        if self.s["rights"].get("cover"):
-            kwargs.update({"cover_rights": self.s["rights"]["cover"]})
-        for extra in ["creator", "publisher", "publisher_uri", "work_uri"]:
-            if self.s["metadata"].get(extra):
-                kwargs.update({extra: self.s["metadata"][extra]})
-        terms = _c.get_rights_template_list(**kwargs)
-        soup = BeautifulSoup(_c.XHTML_TEMPLATE, "lxml")
-        soup.title.string = self.s["metadata"]["title"]
-        for text in terms:
-            # https://stackoverflow.com/a/23975648/295606
-            if isinstance(text, list) and len(text) == 2:
-                # Is an image reference
-                html = F"<p class='first center'><img src='{text[0]}' title='{text[1]}' class='logo center' /></p>"
-            else:
-                # Text or link
-                html = F"<p class='first center'>{text}</p>"
-                if _c.check_uri(text):
-                    html = F"<p class='first center'><a href='{text}'>{urlparse(text).netloc}</a></p>"
-            snippet = BeautifulSoup(html, "lxml").p.extract()
-            soup.section.append(snippet)
-        with open(self.directory + F"rights.xhtml", "w") as w:
-            w.write(soup.prettify(formatter="html"))
+        if self.metadata.contributor is None:
+            self.metadata.contributor = []
+        self.metadata.contributor.append(Contributor(**contributor))
+        _c.save_json(self.metadata.dict(by_alias=True), self.directory / _c.DEFAULT_METADATA_SETTINGS, overwrite=True)
 
     def set_dedication(self, dedication: [str, list[str]]):
         """
@@ -444,179 +480,150 @@ class CreateWork:
             Provide as a string, or list of strings for multiple paragraphs.
         
         """
-        if not self.s["metadata"]["validated"]:
+        if not self.work_name or not self.metadata:
             e = "`set_metadata` before setting dedication."
             raise PermissionError(e)
-        soup = BeautifulSoup(_c.XHTML_TEMPLATE, "lxml")
-        soup.title.string = self.s["metadata"]["title"]
-        if isinstance(dedication, str):
-            dedication = [dedication]
-        for text in dedication:
-            html = F"<p class='first center'><i>{text}</i></p>"
-            snippet = BeautifulSoup(html, "lxml").p.extract()
-            soup.section.append(snippet)
-        with open(self.directory + F"dedication.xhtml", "w") as w:
-            w.write(soup.prettify(formatter="html"))
+        with open(self.directory / F"dedication.xhtml", "w") as w:
+            w.write(pages.create_dedication_xhtml(dedication))
+
+    def set_rights(self, rights: [str, list[str]]):
+        """
+        Set publication rights for creative work. Provide as a string, or list of strings if it is on multiple 
+        paragraphs.
+
+        There are multiple appropriate rights, and two examples are below. Modify as you require.
+
+        * Commercial copyright with all rights reserved:
+
+        .. code-block:: python
+
+            ["The right of the creator to be identified as the author of the Work has been asserted by them in 
+              accordance with the Copyright, Designs and Patents Act 1988. This creator supports copyright. Copyright 
+              gives creators space to explore and provides for their long-term ability to sustain themselves from 
+              their work. Thank you for buying this work and for complying with copyright laws by not reproducing, 
+              scanning, or distributing any part of it without permission. Your support will contribute to future 
+              works by the creator."]
+        
+        * Commercial copyright but licenced for distribution under Attribution-NonCommercial-ShareAlike 4.0 International (`CC BY-NC-SA 4.0 <https://creativecommons.org/licenses/by-nc-sa/4.0/>`_):
+
+        .. code-block:: python
+
+            ["You are free to copy and redistribute the Work in any medium or format, and remix, transform, and build 
+              upon the Work. The creator cannot revoke these freedoms as long as you follow the license terms.",
+             "In return: You may not use the material for commercial purposes. You must give appropriate credit, provide 
+              a link to this license, and indicate if changes were made. You may do so in any reasonable manner, but not
+              in any way that suggests the creator endorses you or your use. If you remix, transform, or build upon the 
+              material, you must distribute your contributions under the same license as the original. You may not apply 
+              legal terms or technological measures that legally restrict others from doing anything the license 
+              permits."]
+
+        Parameters
+        ----------
+        rights: str or list of str
+            Provide as a string, or list of strings for multiple paragraphs.
+        """
+        if not self.work_name or not self.metadata:
+            e = "`set_metadata` before setting rights."
+            raise PermissionError(e)
+        if isinstance(rights, str):
+            rights = [rights]
+        self.metadata.rights = rights
+        _c.save_json(self.metadata.dict(by_alias=True), self.directory / _c.DEFAULT_METADATA_SETTINGS, overwrite=True)
 
     ############################################################################
     # BUILD CREATIVE WORK
     ############################################################################
 
-    def _build_metadata(self):
-        """
-        Set values for the permitted Dublin Core schema terms.
-        """
-        dublin_core = list(_c.get_metadata_settings().keys())
-        for k, v in self.s["metadata"]["terms"]:
-            if k not in dublin_core: continue
-            if k in ["identifier", "title", "language", "creator"]:
-                if k == "identifier": 
-                    if v[:4].lower() == "isbn":
-                        self.work.IDENTIFIER_ID = "ISBN"
-                    self.work.set_identifier(v)
-                if k == "title": 
-                    self.work.set_title(v)
-                if k == "language": 
-                    self.work.set_language(v)
-                if k == "creator": 
-                    self.work.add_author(v)
-            else:
-                self.work.add_metadata("DC", k, v)
-
     def build(self):
         """
         Automatically build the creative work as a standards compliant EPUB3. Save to the root directory.
         """
-        root_path = str(Path(self.directory).parent)
-        work_path = F"{root_path}/{self.s['work_link']}.epub"
-        if not self.s["metadata"]["validated"]:
+        if not self.work_name or not self.metadata:
             e = "`set_metadata` before building creative work."
             raise PermissionError(e)
+        epub_path = self.directory.parent / F"{self.work_name}.epub"
         # Generate the initial creative content using Pandoc
-        with open(self.directory + "data.xml", "w") as xml:
-            for k, v in self.s["metadata"]["terms"]:
-                xml.write(F"<dc:{k}>{v}</dc:{k}>\n")
-        extra_args=[
-            F"--epub-metadata={self.directory}data.xml",
-            "--toc"
-        ]
-        pypandoc.convert_file(self.directory + self.s["files"]["docx"], 
-                    format="docx",
-                    to="epub3", 
-                    extra_args=extra_args,
-                    outputfile=work_path)
+        # pypandoc can't handle PosixPaths ...
+        pypandoc.convert_file(str(self.directory / F"{self.work_name}.docx"), 
+                              format="docx",
+                              to="epub3",
+                              outputfile=str(epub_path))
         # Generate the epub version
-        spine = []
-        resource_path = str(_c.get_helper_path())
-        source = epub.read_epub(work_path)
-        self.work = epub.EpubBook()
-        self._build_metadata()
-        creator = self.s["metadata"]["creator"]
-        if isinstance(creator, list):
-            if len(creator) > 1:
-                creator = " &amp; ".join([", ".join(creator[:-1]), creator[-1]])
-                pn_author = "authors"
-                pn_this = "These authors"
-                pn_support = "support"
-            else:
-                creator = creator[0]
-        work_title = F"{self.s['metadata']['title']} by {creator}"
-        # Add stylesheet
-        default_css = epub.EpubItem(uid="stylesheet", 
-                                    file_name="css/stylesheet.css", 
-                                    media_type="text/css", 
-                                    content=open(resource_path + "/css/stylesheet.css", "rb").read())
-        self.work.add_item(default_css)
-        # Add cover image
-        try:
-            _c.check_source(self.directory + self.s["files"]["cover"])
-            self.work.set_cover(self.s["files"]["cover"], open(self.directory + self.s["files"]["cover"], "rb").read())
-            spine.append("cover")
-        except FileNotFoundError:
-            pass
-        # Add copyright plate
-        try:
-            _c.check_source(self.directory + "rights.xhtml")
-            copyright = epub.EpubHtml(title=work_title, file_name="copyright.xhtml")
-            copyright.content = open(self.directory + "rights.xhtml", "rb").read()
-            copyright.set_language(self.s["metadata"]["language"])
-            copyright.add_item(default_css)
-            self.work.add_item(copyright)
-            spine.append(copyright)
-        except FileNotFoundError:
-            pass
-        # Add dedication plate - if it exists
-        try:
-            _c.check_source(self.directory + "dedication.xhtml")
-            dedication = epub.EpubHtml(title=work_title, file_name="dedication.xhtml")
-            dedication.content = open(self.directory + "dedication.xhtml", "rb").read()
-            dedication.set_language(self.s["metadata"]["language"])
-            dedication.add_item(default_css)
-            self.work.add_item(dedication)
-            spine.append(dedication)
-        except FileNotFoundError:
-            pass
-        # Add default Chapisha/Qwyre logo
-        logo = epub.EpubImage()
-        logo.file_name = "images/logo.png"
-        logo.media_type = "image/png"
-        logo.content = open(resource_path + "/images/logo.png", "rb").read()
-        self.work.add_item(logo)
-        # Add default fonts
-        for fontfile in os.listdir(resource_path + "/fonts"):
-            font = epub.EpubItem()
-            font.file_name = "fonts/" + fontfile
-            font.media_type = "font/ttf"
-            font.content = open(resource_path + "/fonts/" + fontfile, "rb").read()
-            self.work.add_item(font)
-        # Add all chapters from source
-        spine.append("nav")
-        toc = []
-        chapter_num = 1
-        for item in source.get_items():
-            if item.get_type() in [ebooklib.ITEM_DOCUMENT, ebooklib.ITEM_IMAGE]:
-                # Remove pandoc's folder structure
-                item_file = item.get_name().split("/")[-1]
-                if item_file == "nav.xhtml":
-                    continue
-            if item.get_type() == ebooklib.ITEM_DOCUMENT:
-                chapter_content = item.get_body_content()
-                soup = BeautifulSoup(chapter_content, "lxml")
+        with UpdateZipFile(epub_path, "a") as w:
+            # REMOVES
+            REMOVES = ["EPUB/styles/stylesheet1.css", "EPUB/text/title_page.xhtml", "EPUB/nav.xhtml"]
+            for remove in REMOVES:
                 try:
-                    chapter_title = soup.h1.text
-                except AttributeError:
-                    # isn't a chapter
+                    w.remove_file(remove)
+                except KeyError:
                     continue
-                # Create chapter
-                chapter_id = F"chapter_{str(chapter_num)}"
-                chapter_num += 1
-                chapter = epub.EpubHtml(title=F"{chapter_title} - {self.s['metadata']['title']}", file_name=item_file)
-                chapter.content = chapter_content
-                chapter.set_language(self.s["metadata"]["language"])
-                chapter.add_item(default_css)
-                self.work.add_item(chapter)
-                spine.append(chapter)
-                toc.append(epub.Link(item_file, chapter_title, chapter_id))
-            if item.get_type() == ebooklib.ITEM_IMAGE:
-                item_image = epub.EpubImage()
-                item_image.file_name = "images/" + item_file
-                item_image.media_type = item.media_type
-                item_image.content = item.get_content()
-                self.work.add_item(item_image)
-        # Create table of contents and navigation
-        self.work.toc = tuple(toc)
-        self.work.add_item(epub.EpubNcx())
-        self.work.add_item(epub.EpubNav())
-        self.work.spine = spine
-        # Complete the build
-        epub.write_epub(work_path, self.work)
+            # DEFAULT COMPONENTS
+            DEFAULT = [(self.source_path / "css" / "core.css", "EPUB/css/core.css"),
+                    (self.source_path / "images" / "logo.svg", "EPUB/images/logo.svg"),
+                    (self.source_path / "xhtml" / "onix.xml", "EPUB/onix.xml"),
+                    (self.source_path / "xhtml" / "container.xml", "META-INF/container.xml")]
+            for default_file, write_file in DEFAULT:
+                w.write(default_file, write_file)
+            # DEFAULT FONTS
+            for f in os.listdir(self.source_path / "fonts"):
+                w.write(self.source_path / "fonts" / f, F"EPUB/fonts/{f}")
+            # ADD titlepage.xhtml
+            w.writestr("EPUB/text/titlepage.xhtml", pages.create_titlepage_xhtml(self.metadata))
+            # ADD colophon.xhtml
+            w.writestr("EPUB/text/colophon.xhtml", pages.create_colophon_xhtml(self.metadata))
+            # ADD cover.img
+            for custom_image in ["cover"]:
+                for image_path in [self.directory / F"{custom_image}.{t}" for t in ["jpg", "jpeg", "png", "gif", "svg"]]:
+                    if image_path.exists():
+                        w.write(image_path, F"EPUB/images/{image_path.name}")
+            # GET DEDICATION and CHAPTERS
+            spine = []
+            # check if the path to dedication exists, if it does, add it to the work and spine
+            if (self.directory / "dedication.xhtml").exists():
+                w.write(self.directory / "dedication.xhtml", "EPUB/text/dedication.xhtml")
+                spine = [Matter(partition="frontmatter", content="dedication", title="Dedication")]
+            CHAPTERS = [f for f in w.namelist() if f.startswith("EPUB/text/ch")]
+            CHAPTERS.sort()
+            self.metadata.word_count = 0
+            for chapter in CHAPTERS:
+                file_as = F"EPUB/text/chapter-{chapter.split('.')[0][-1]}.xhtml"
+                try:
+                    chapter_xml = w.read(chapter)
+                except KeyError:
+                    continue
+                if file_as != chapter:
+                    # If delete and then re-add same file, causes ZipFile confusion
+                    w.remove_file(chapter)
+                # Restructure chapter xml into standard format
+                chapter_xml = pages.restructure_chapter(chapter_xml)
+                chapter_title = chapter_xml.title.string
+                self.metadata.word_count += formats.get_word_count(str(chapter_xml))
+                w.writestr(file_as, str(chapter_xml))
+                spine.append(Matter(partition=MatterPartition.body, title=chapter_title))
+            # PANDOC MAY STILL ADD IMAGES FOUND IN THE WORK WHICH WE NEED TO DISCOVER AND ADD TO THE MANIFEST
+            # NOTE, these are not only to be added to the manifest, but the folder renamed as well
+            image_manifest = [f.replace("EPUB/", "") for f in w.namelist() if f.startswith("EPUB/images/")]
+            for img in [f for f in w.namelist() if f.startswith("EPUB/media/")]:
+                new_img = img.replace("/media/", "/images/")
+                try:
+                    old_img = w.read(img)
+                    w.remove_file(img)
+                    w.writestr(new_img, old_img)
+                except KeyError:
+                    continue
+                image_manifest.append(new_img.replace("EPUB/", ""))
+            # ADD content.opf
+            w.writestr("EPUB/content.opf", pages.create_content_opf(self.metadata, image_manifest, spine))
+            # ADD toc.ncx
+            w.writestr("EPUB/toc.ncx", pages.create_toc_ncx(self.metadata, spine))
+            # ADD toc.xhtml
+            w.writestr("EPUB/toc.xhtml", pages.create_toc_xhtml(self.metadata, spine))
 
     def validate(self) -> bool:
         """
         Validate the creative work as a standards compliant EPUB3.
         """
-        root_path = str(Path(self.directory).parent)
-        source = F"{root_path}/{self.s['work_link']}.epub"
-        _c.check_source(source)
-        result = EpubCheck(source)
+        epub_path = self.directory.parent / F"{self.work_name}.epub"
+        _c.check_source(epub_path)
+        result = EpubCheck(epub_path)
         return result.valid
