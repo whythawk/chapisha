@@ -19,6 +19,8 @@ stylesheet and take care of document structure:
 - Add in an optional dedication,
 - Build your creative work as an EPUB3 standards-compliant ebook.
 
+[Read the docs](https://chapisha.readthedocs.io/en/latest/)
+
 ## Why use it?
 
 **Chapisha** is easy-to-use, quick, and fits into your workflow.
@@ -26,11 +28,8 @@ stylesheet and take care of document structure:
 There are a multitude of `.epub` conversion tools but few that support the day-to-day workflow and tools used by most
 jobbing writers: Microsoft Word.
 
-**Chapisha** draws on two powerful workhorses for document conversion and ebook creation, [Pandoc](https://pandoc.org/epub.html)
-and [EbookLib](http://docs.sourcefabric.org/projects/ebooklib/en/latest/index.html), adding a simple, stateless Python
-frame around it. 
-
-**Chapisha** is stateless, which means you can also include it in a web application.
+**Chapisha** draws on `Pandoc <https://pandoc.org/epub.html>`_ for document conversion and ebook creation, adding a 
+simple, stateless Python frame around it, which means you can also include it in a web application.
 
 ## Installation and dependencies
 
