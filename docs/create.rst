@@ -1,1 +1,1 @@
-.. automodule:: create.create
+.. automodule:: chapisha.create.create

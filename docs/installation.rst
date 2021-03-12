@@ -8,10 +8,10 @@ Requirements
 
 **Chapisha** has a relatively short list of requirements (excl. dependencies):
 
-* beautifulsoup4 = "^4.9.3"
-* pypandoc = "^1.5"
-* EbookLib = "^0.17.1"
 * epubcheck = "^0.4.2"
+* beautifulsoup4 = "^4.9.3"
+* pydantic = "^1.7.3"
+* pypandoc = "^1.5"
 
 You will also need to install `Pandoc` and `Java`::
 
@@ -29,6 +29,6 @@ Install with `pip`::
 
 Then import::
 
-	from chapishia import CreateWork
+	from chapisha import CreateWork
 
 Your next steps are to convert a `.docx` to an `.epub` :doc:`create`.

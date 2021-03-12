@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "chapisha"
-version = "0.1.0"
+version = "0.2.0"
 description = "Chapisha: docx to standards-compliant epub3 conversion"
 authors = ["Gavin Chait <gchait@whythawk.com>"]
 license = "BSD-3-Clause"
@@ -14,10 +14,11 @@ classifiers = [
     "Topic :: Text Processing :: General"
 ]
 include = [
-    "chapisha/helpers/css/*",
-    "chapisha/helpers/fonts/*",
-    "chapisha/helpers/images/*",
-    "chapisha/helpers/json/*",
+    "chapisha/helpers/data/css/*",
+    "chapisha/helpers/data/fonts/*",
+    "chapisha/helpers/data/images/*",
+    "chapisha/helpers/data/json/*",
+    "chapisha/helpers/data/templates/*",
     "tests/data/*"
 ]
 
@@ -25,9 +26,12 @@ include = [
 python = "^3.9.1"
 beautifulsoup4 = "^4.9.3"
 pypandoc = "^1.5"
-EbookLib = "^0.17.1"
 epubcheck = "^0.4.2"
 tomlkit = "^0.7.0"
+pydantic = "^1.7.3"
+regex = "^2020.11.13"
+filetype = "^1.0.7"
+lxml = "^4.6.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

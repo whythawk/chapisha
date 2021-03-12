@@ -29,11 +29,8 @@ Why use it?
 There are a multitude of `.epub` conversion tools but few that support the day-to-day workflow and tools used by most
 jobbing writers: Microsoft Word.
 
-**Chapisha** draws on two powerful workhorses for document conversion and ebook creation, `Pandoc <https://pandoc.org/epub.html>`_
-and `EbookLib <http://docs.sourcefabric.org/projects/ebooklib/en/latest/index.html>`_, adding a simple, stateless Python
-frame around it. 
-
-**Chapisha** is stateless, which means you can also include it in a web application.
+**Chapisha** draws on `Pandoc <https://pandoc.org/epub.html>`_ for document conversion and ebook creation, adding a 
+simple, stateless Python frame around it, which means you can also include it in a web application.
 
 Licence
 -------
@@ -42,13 +39,13 @@ Licence
 
 * `Samara logo <chapisha/helpers/images/logo.png>`_ is copyright `Whythawk <https://whythawk.com>`_ and `Qwyre <https://gavinchait.com>`_.
 * `Cover photo <tests/data/cover.jpg>`_ is copyright Rodd Halstead, licenced under commercial terms to Whythawk, and used here for test purposes.
-* `Usan Abasi's Lament <tests/data/Usan Abasi’s Lament - ebook.docx>`_ is copyright Gavin Chait, licenced `CC BY-NC-SA 4.0 <https://creativecommons.org/licenses/by-nc-sa/4.0/>`_ and used here for test purposes.
+* `Usan Abasi's Lament <tests/data/usan-abasis-lament.docx>`_ is copyright Gavin Chait, licenced `CC BY-NC-SA 4.0 <https://creativecommons.org/licenses/by-nc-sa/4.0/>`_ and used here for test purposes.
+
 
 .. toctree::
    :caption: Getting started
 
    installation
-
 
 
 .. toctree::
@@ -58,17 +55,13 @@ Licence
    create
 
 
-
 .. toctree::
    :caption: Reference API
 
    create_api
 
 
-
 Indices and tables
 ==================
 
 * :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

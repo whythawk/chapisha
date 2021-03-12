@@ -88,7 +88,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Dependencies, installation &amp; importing</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Building a creative work as an epub</span></p>
+<p class="caption"><span class="caption-text">Step-by-step guide</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">CreateWork</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#workflow">Workflow</a></li>
@@ -96,6 +96,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#set-metadata">Set metadata</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#set-document">Set document</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#set-cover">Set cover</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#add-contributors">Add contributors</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#set-rights">Set rights</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#set-dedication">Set dedication</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#build">Build</a></li>
@@ -175,10 +176,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <span class="target" id="module-create.create"></span><span class="target" id="module-create"></span><div class="section" id="creatework">
+  <span class="target" id="module-chapisha.create.create"></span><span class="target" id="module-create"></span><div class="section" id="creatework">
 <h1>CreateWork<a class="headerlink" href="#creatework" title="Permalink to this headline">¶</a></h1>
 <p>Publish a standards compliant EPUB3 creative work from a source Microsoft Word <cite>docx</cite> document, and define its
-metadata, cover and publishing rights.</p>
+metadata, cover and publishing rights. Currently does not support <cite>odt</cite> since <cite>Pandoc</cite> seems to lose any embedded
+graphics.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This process will overwrite any existing EPUB3 file of the same name, if it already exists.</p>
@@ -191,7 +193,8 @@ metadata, cover and publishing rights.</p>
 <li><p>Define and validate the metadata required for the creative work,</p></li>
 <li><p>Copy the <cite>docx</cite> file to import into the working directory,</p></li>
 <li><p>Copy the cover image to import into the working directory,</p></li>
-<li><p>Define the creative work’s publication rights,</p></li>
+<li><p>Define and add any contributors, such as cover artist,</p></li>
+<li><p>Update the creative work’s publication rights,</p></li>
 <li><p>Add in an optional dedication,</p></li>
 <li><p>Build the creative work,</p></li>
 <li><p>Validate the work is EPUB3 standards compliant.</p></li>
@@ -233,16 +236,24 @@ or <cite>fr</cite> for French).</p>
 <li><p><cite>work_uri</cite>: The URI for your creative work.</p></li>
 <li><p><cite>publisher_uri</cite>: The URI for the publisher of your creative work.</p></li>
 </ul>
-<p>Create a paired list of these properties, along with the value of each. As example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="s2">&quot;term&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;term&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;term&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">]]</span>
-</pre></div>
-</div>
-<p>e.g.:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Our Memory Like Dust&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;creator&quot;</span><span class="p">:</span> <span class="s2">&quot;Gavin Chait&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;identifier&quot;</span><span class="p">:</span> <span class="s2">&quot;isbn:9780993191459&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="s2">&quot;2017-07-28]]</span>
+<p>Create a paired dictionary of these properties. As example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">METADATA</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;identifier&quot;</span><span class="p">:</span> <span class="s2">&quot;isbn:9780993191459&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Usan Abasi&#39;s Lament&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Years after the events of &quot;</span><span class="n">Lament</span> <span class="k">for</span> <span class="n">the</span> <span class="n">Fallen</span><span class="s2">&quot;, Isaiah tells of the myth of Usan Abasi, who was punished by the Sky God to spend eternity in the form of a brass bowl and imprisoned within a vast termite mountain. Now the ceremony which ensures that Usan Abasi remains dormant has failed, and his ancient evil awakes. A free, stand-alone short-story set in the city of Ewuru and linking &quot;</span><span class="n">Lament</span> <span class="k">for</span> <span class="n">the</span> <span class="n">Fallen</span><span class="s2">&quot; to a forthcoming novel.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;language&quot;</span><span class="p">:</span> <span class="s2">&quot;en&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;creator&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Gavin Chait&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;rights&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;The right of the creator to be identified as the author of the Work has been asserted by them in accordance with the Copyright, Designs and Patents Act 1988. This creator supports copyright. Copyright gives creators space to explore and provides for their long-term ability to sustain themselves from their work. Thank you for buying this work and for complying with copyright laws by not reproducing, scanning, or distributing any part of it without permission. Your support will contribute to future works by the creator.&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;publisher&quot;</span><span class="p">:</span> <span class="s2">&quot;Qwyre Publishing&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;publisher_uri&quot;</span><span class="p">:</span> <span class="s2">&quot;https://qwyre.com&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;work-uri&quot;</span><span class="p">:</span> <span class="s2">&quot;https://gavinchait.com&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="s2">&quot;2017-07-23&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;subject&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;science fiction&quot;</span><span class="p">,</span> <span class="s2">&quot;african mythology&quot;</span><span class="p">]</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>Set the metadata:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">work</span><span class="o">.</span><span class="n">set_metadata</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">work</span><span class="o">.</span><span class="n">set_metadata</span><span class="p">(</span><span class="n">METADATA</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -278,30 +289,90 @@ need to create your image (or have someone create it for you) exactly as you wis
 will be added, removed, or changed.</p>
 <p>Please also ensure you have the appropriate rights to use the image on your cover. There are more than sufficient
 services providing openly-licenced, or even public domain, work for you to use.</p>
-<p>Include the exact phrasing of the rights information as you set the cover.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">work</span><span class="o">.</span><span class="n">set_cover</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">rights</span><span class="o">=</span><span class="s2">&quot;Cover image copyright .....&quot;</span><span class="p">)</span>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can optionally add the image contributor details here, or on the next step. Do not do it in both or the contributor information will be repeated.</p>
+</div>
+<p>Example code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">CONTRIBUTOR</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;artist&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Rodd Halstead&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;terms&quot;</span><span class="p">:</span> <span class="s2">&quot;Cover image &#39;Red Maple Fruit (Samara)&#39; photograph. All rights reserved. Used under licence.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;year&quot;</span><span class="p">:</span> <span class="s2">&quot;2006&quot;</span>
+<span class="p">}</span>
+
+<span class="n">work</span><span class="o">.</span><span class="n">set_cover</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">contributor</span><span class="o">=</span><span class="n">CONTRIBUTOR</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Where <cite>source</cite> is the complete path to the image file.</p>
+</div>
+<div class="section" id="add-contributors">
+<h3>Add contributors<a class="headerlink" href="#add-contributors" title="Permalink to this headline">¶</a></h3>
+<p>You may have numerous contributors you wish to acknowledge. Fields are:</p>
+<ul class="simple">
+<li><p><cite>id_</cite>: Contributor identity, based on a specified list of <cite>artist</cite>, <cite>editor</cite> or <cite>translator</cite>.</p></li>
+<li><p><cite>name</cite>: Name of a person, organisation, etc. that played a secondary role - such as an editor - in the creation of the work.</p></li>
+<li><p><cite>terms</cite>: Information about copyright held by the rights-holder in and over their contribution to the creative work. Formatted as you wish it to appear.</p></li>
+<li><p><cite>year</cite>: The year of the contribution or publication of the contributor’s work.</p></li>
+</ul>
+<p>Example code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">CONTRIBUTOR</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;artist&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Rodd Halstead&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;terms&quot;</span><span class="p">:</span> <span class="s2">&quot;Cover image &#39;Red Maple Fruit (Samara)&#39; photograph. All rights reserved. Used under licence.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;year&quot;</span><span class="p">:</span> <span class="s2">&quot;2006&quot;</span>
+<span class="p">}</span>
+
+<span class="n">work</span><span class="o">.</span><span class="n">add_contributor</span><span class="p">(</span><span class="n">CONTRIBUTOR</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><cite>add_contributor</cite> as many times as you have people or organisations to acknowledge.</p>
 </div>
 <div class="section" id="set-rights">
 <h3>Set rights<a class="headerlink" href="#set-rights" title="Permalink to this headline">¶</a></h3>
 <p>There are obviously a broad range of rights with which you can release your creative work. For the moment, <strong>Chapisha</strong>
 supports only two of these:</p>
-<ul class="simple">
-<li><p>Commercial copyright with all rights reserved.</p></li>
-<li><p>Commercial copyright but licenced for distribution under Attribution-NonCommercial-ShareAlike 4.0 International (<a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>).</p></li>
+<p>There are multiple appropriate rights, and two examples are below. Modify as you require.</p>
+<ul>
+<li><p>Commercial copyright with all rights reserved:</p>
+<blockquote>
+<div><p>The right of the creator to be identified as the author of the Work has been asserted by them in
+accordance with the Copyright, Designs and Patents Act 1988. This creator supports copyright. Copyright
+gives creators space to explore and provides for their long-term ability to sustain themselves from
+their work. Thank you for buying this work and for complying with copyright laws by not reproducing,
+scanning, or distributing any part of it without permission. Your support will contribute to future
+works by the creator.</p>
+</div></blockquote>
+</li>
+<li><p>Commercial copyright but licenced for distribution under Attribution-NonCommercial-ShareAlike 4.0 International (<a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>):</p>
+<blockquote>
+<div><p>You are free to copy and redistribute the Work in any medium or format, and remix, transform, and build
+upon the Work. The creator cannot revoke these freedoms as long as you follow the license terms.</p>
+<p>In return: You may not use the material for commercial purposes. You must give appropriate credit, provide
+a link to this license, and indicate if changes were made. You may do so in any reasonable manner, but not
+in any way that suggests the creator endorses you or your use. If you remix, transform, or build upon the
+material, you must distribute your contributions under the same license as the original. You may not apply
+legal terms or technological measures that legally restrict others from doing anything the license
+permits.</p>
+</div></blockquote>
+</li>
 </ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">work</span><span class="o">.</span><span class="n">set_rights</span><span class="p">(</span><span class="n">rights</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<p>Example code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">RIGHTS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;You are free to copy and redistribute the Work in any medium or format, and remix, transform, and build upon the Work. The creator cannot revoke these freedoms as long as you follow the license terms.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;In return: You may not use the material for commercial purposes. You must give appropriate credit, provide a link to this license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the creator endorses you or your use. If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original. You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.&quot;</span>
+<span class="p">]</span>
+
+<span class="n">work</span><span class="o">.</span><span class="n">set_rights</span><span class="p">(</span><span class="n">RIGHTS</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Where <cite>True</cite> is all rights reserved, and <cite>False</cite> is CC BY-NC-SA 4.0.</p>
+<p>Rights terms can be one line of text, or several. If several, each line must be provided as a separate term in a <cite>list</cite>.</p>
 </div>
 <div class="section" id="set-dedication">
 <h3>Set dedication<a class="headerlink" href="#set-dedication" title="Permalink to this headline">¶</a></h3>
 <p>Most creators have a dedication for their work in mind - usually to apologise for all the late nights and impoverishing
 returns on their creative efforts.</p>
-<p>This is optional, but you can include a dedication page.</p>
+<p>This is optional, but you can include a dedication page. Each item in the list will be set on a different paragraph.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dedication</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s2">&quot;For those who leave.&quot;</span><span class="p">,</span>
     <span class="s2">&quot;For those who remain.&quot;</span><span class="p">,</span>

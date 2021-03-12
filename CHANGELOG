@@ -1,1 +1,2 @@
 - 0.1.0: Initial release with epub conversion.
+- 0.2.0: Refactored to use pydantic, and removed eBookLib.
