@@ -276,7 +276,8 @@ import filetype
 
 from ..models.metadata import WorkMetadata, Contributor
 from ..models.matter import Matter, MatterPartition
-from ..helpers import coreio as _c, pages, formats, UpdateZipFile
+from ..helpers import pages, formats, coreio as _c
+from ..helpers.updatezipfile import UpdateZipFile
 
 class CreateWork:
     """

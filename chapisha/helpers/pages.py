@@ -7,7 +7,8 @@ from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 from typing import Optional
 
-from . import UpdateZipFile, coreio as _c
+from . import coreio as _c
+from .updatezipfile import UpdateZipFile
 from ..models.metadata import WorkMetadata, ContributorRoles
 from ..models.matter import MatterPartition, FrontMatter, BodyMatter, BackMatter, Matter
 
