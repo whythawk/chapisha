@@ -18,11 +18,11 @@ class ContributorRoles(str, Enum):
 
 class Contributor(BaseModel):
     """
-    Specific types of contributor who supported the creation of the work. Includes, as `id`: `artist`, `editor`, `translator`.
+    Specific types of contributor who supported the creation of the work. Includes, as `role`: `artist`, `editor`, `translator`.
     """
-    id_: ContributorRoles = Field(..., alias="id", description="Contributor identity, based on a specified list of terms.")
+    role: ContributorRoles = Field(..., description="Contributor identity, based on a specified list of terms.")
     name: str = Field(..., description="Name of a person, organisation, etc. that played a secondary role - such as an editor - in the creation of the work.")
-    terms: str = Field(..., description="Information about copyright held by the rights-holder in and over their contribution to the creative work. Formatted as you wish it to appear.")
+    terms: str = Field(..., description="Information about copyright held by the rights-holder and their terms-of-use for their contribution to the creative work. Formatted as you wish it to appear.")
     year: str = Field(None, description="The year of the contribution or publication of the contributor's work.")
 
 class DublinCoreMetadata(BaseModel):
@@ -41,7 +41,7 @@ class DublinCoreMetadata(BaseModel):
                           description="The publication date of the creative work. Provide in ISO format, YYYY-MM-DD.")
     subject: list[str] = Field(None, description="The subject, or tag, of the creative work. May be more than one.")
     publisher: str = Field(None, description="Name of a person, organisation, etc.  responsible for making the creative work available.")
-    rights: list[str] = Field(..., description="Information about copyright held in and over the creative work. Formatted as you wish it to appear.")
+    rights: str = Field(..., description="A short, single-sentence statement of copyright and publication terms for the creative work, e.g. 'All rights reserved.' or 'Attribution-NonCommercial-ShareAlike 4.0 International.'")
         
 class WorkMetadata(DublinCoreMetadata):
     """
@@ -50,6 +50,8 @@ class WorkMetadata(DublinCoreMetadata):
     """
     long_description: Optional[str] = Field(None, alias="long-description", 
                                             description="The pitch, or jacket-cover, description of the creative work.")
+    long_rights: list[str] = Field(None, alias="long-rights",
+                                   description="Information about copyright held in and over the creative work. Formatted as you wish it to appear.")
     work_uri: Optional[HttpUrl] = Field(None, alias="work-uri", 
                                         description="The URI for your creative work.")
     publisher_uri: Optional[HttpUrl] = Field(None, alias="publisher-uri", 

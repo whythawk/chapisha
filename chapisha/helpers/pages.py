@@ -109,7 +109,7 @@ def create_content_opf(metadata: WorkMetadata, image_manifest: list[str], spine:
                                   F'<meta property="dcterms:modified">{datetime.datetime.now(zoneinfo.ZoneInfo("Europe/Paris")).isoformat("T", "seconds").split("+")[0]}Z</meta>')
         # dc:rights
         opf_xml = opf_xml.replace('<dc:rights></dc:rights>',
-                                  F'<dc:rights>{metadata.rights[0]} For full license information see the Colophon file included at the end of this ebook.</dc:rights>')
+                                  F'<dc:rights>{metadata.rights} For full license information see the Colophon (colophon.xhtml) included at the end of this ebook.</dc:rights>')
         # dc:publisher
         if metadata.publisher:
             opf_xml = opf_xml.replace('<meta property="se:url.homepage" refines="#generator">https://github.com/whythawk/chapisha</meta>', 
@@ -155,7 +155,7 @@ def create_content_opf(metadata: WorkMetadata, image_manifest: list[str], spine:
         contributor_xml = ""
         if len(metadata.contributor):
             for i, contributor in enumerate(metadata.contributor):
-                contributor_xml += F'\t\t<dc:contributor id="{contributor.id_}-{i+1}">{contributor.name}</dc:contributor>\n'
+                contributor_xml += F'\t\t<dc:contributor id="{contributor.role}-{i+1}">{contributor.name}</dc:contributor>\n'
         opf_xml = opf_xml.replace('\t\t<dc:contributor id="artist"></dc:contributor>\n', 
                                   contributor_xml)
         ################################################################################################################
@@ -293,15 +293,15 @@ def create_colophon_xhtml(metadata: WorkMetadata) -> str:
                 creator = " &amp; ".join([", ".join(creator[:-1]), creator[-1]])
             else:
                 creator = creator[0]
-        xml_txt = xml_txt.replace("AUTHOR, YEAR.", F"{creator}, {metadata.isodate.year}.")
+        xml_txt = xml_txt.replace("AUTHOR, YEAR. RIGHTS.", F"{creator}, {metadata.isodate.year}. {metadata.rights}")
         # Set author url
         xml_url = ""
         if metadata.work_uri:
             xml_url = F'<p><a href="{metadata.work_uri}">{urlparse(metadata.work_uri).netloc}</a><br/></p>'
         xml_txt = xml_txt.replace('<p><a href="AUTHOR_URL">AUTHOR_URL</a><br/></p>', xml_url)
-        # Set publication rights
+        # Set publication long-rights
         xml_rights = ""
-        for p in metadata.rights:
+        for p in metadata.long_rights:
             xml_rights += F"\t\t\t<p>{p}</p>\n"
         xml_txt = xml_txt.replace("\t\t\t<p>PUBLICATION_RIGHTS</p>\n", xml_rights)
         # Set publisher and publisher url
@@ -317,7 +317,7 @@ def create_colophon_xhtml(metadata: WorkMetadata) -> str:
             # If ctrb.year is None, then use work year
             if not ctrb.year:
                 ctrb.year = metadata.isodate.year
-            xml_ctrb += F"<p>{ctrb.id_.capitalize()} contribution is copyright (c) {ctrb.name}, {ctrb.year}. {ctrb.terms}</p>"
+            xml_ctrb += F"<p>{ctrb.role.capitalize()} contribution is copyright (c) {ctrb.name}, {ctrb.year}. {ctrb.terms}</p>"
         xml_txt = xml_txt.replace("<p>CONTRIBUTORS</p>", xml_ctrb)
     return xml_txt
 

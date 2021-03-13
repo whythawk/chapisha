@@ -49,27 +49,26 @@ Set metadata
 ^^^^^^^^^^^^
 
 `Dublin Core <https://www.dublincore.org/specifications/dublin-core/dces/>`_ is a vocabulary of fifteen properties for 
-use in resource description. Three of them - `title`, `identifier` and `language` - are required. The `language` code
-is defined by the `ISO 679-1 <https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes>`_ standard (e.g. `en` for English,
-or `fr` for French).
+use in resource description. Four of them - `title`, `identifier`, `language` and `rights` - are required. The 
+`language` code is defined by the `ISO 679-1 <https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes>`_ standard 
+(e.g. `en` for English, or `fr` for French).
 
-The official properties:
+Metadata properties:
 
-* `identifier`: UUID, DOI or ISBN of the creative work. A UUID be generated if not included.
+* `identifier`: UUID, DOI or ISBN of the creative work. A UUID will be generated if not included.
 * `title`: Name given to the creative work.
 * `language`: Specify the language of the creative work. Two letter code defined by ISO 639-1.
 * `creator`: Name of a person, organisation, etc. responsible for the creation of the work. May be more than one.
+* `work_uri`: The URI for your creative work.
 * `contributor`: Name of a person, organisation, etc. that played a secondary role - such as an editor - in the creation of the work. May be more than one.
 * `date`: The publication date of the creative work. Provide in ISO format, YYYY-MM-DD.
 * `subject`: The subject, or tag, of the creative work. May be more than one.
 * `publisher`: Name of a person, organisation, etc.  responsible for making the creative work available.
-* `rights`: Information about copyright held in and over the creative work. Formatted as you wish it to appear.
-
-In addition, you can provide a small number of properties to be included on the rights plate:
-
-* `description`: The pitch, or jacket-cover, description of the creative work.
-* `work_uri`: The URI for your creative work.
 * `publisher_uri`: The URI for the publisher of your creative work.
+* `rights`: A short, single-sentence statement of copyright and publication terms for the creative work, e.g. 'All rights reserved.' or 'Attribution-NonCommercial-ShareAlike 4.0 International.'
+* `long_rights`: Lengthier description and information about copyright held in and over the creative work. Formatted as you wish it to appear.
+* `description`: A short, single-sentence summary of the creative work.
+* `long_description`: The pitch, or jacket-cover, description of the creative work.
 
 Create a paired dictionary of these properties. As example:
 
@@ -81,7 +80,8 @@ Create a paired dictionary of these properties. As example:
         "description": "Years after the events of \"Lament for the Fallen\", Isaiah tells of the myth of Usan Abasi, who was punished by the Sky God to spend eternity in the form of a brass bowl and imprisoned within a vast termite mountain. Now the ceremony which ensures that Usan Abasi remains dormant has failed, and his ancient evil awakes. A free, stand-alone short-story set in the city of Ewuru and linking \"Lament for the Fallen\" to a forthcoming novel.",
         "language": "en",
         "creator": ["Gavin Chait"],
-        "rights": ["The right of the creator to be identified as the author of the Work has been asserted by them in accordance with the Copyright, Designs and Patents Act 1988. This creator supports copyright. Copyright gives creators space to explore and provides for their long-term ability to sustain themselves from their work. Thank you for buying this work and for complying with copyright laws by not reproducing, scanning, or distributing any part of it without permission. Your support will contribute to future works by the creator."],
+        "rights": "All rights reserved.",
+        "long_rights": ["The right of the creator to be identified as the author of the Work has been asserted by them in accordance with the Copyright, Designs and Patents Act 1988. This creator supports copyright. Copyright gives creators space to explore and provides for their long-term ability to sustain themselves from their work. Thank you for buying this work and for complying with copyright laws by not reproducing, scanning, or distributing any part of it without permission. Your support will contribute to future works by the creator."],
         "publisher": "Qwyre Publishing",
         "publisher_uri": "https://qwyre.com",
         "work-uri": "https://gavinchait.com",
@@ -142,7 +142,7 @@ Example code:
 .. code-block:: python
 
     CONTRIBUTOR = {
-        "id": "artist", 
+        "role": "artist", 
         "name": "Rodd Halstead", 
         "terms": "Cover image 'Red Maple Fruit (Samara)' photograph. All rights reserved. Used under licence.", 
         "year": "2006"
@@ -157,7 +157,7 @@ Add contributors
 
 You may have numerous contributors you wish to acknowledge. Fields are:
 
-* `id_`: Contributor identity, based on a specified list of `artist`, `editor` or `translator`.
+* `role`: Contributor identity, based on a specified list of `artist`, `editor` or `translator`.
 * `name`: Name of a person, organisation, etc. that played a secondary role - such as an editor - in the creation of the work.
 * `terms`: Information about copyright held by the rights-holder in and over their contribution to the creative work. Formatted as you wish it to appear.
 * `year`: The year of the contribution or publication of the contributor's work.
@@ -167,7 +167,7 @@ Example code:
 .. code-block:: python
 
     CONTRIBUTOR = {
-        "id": "artist", 
+        "role": "artist", 
         "name": "Rodd Halstead", 
         "terms": "Cover image 'Red Maple Fruit (Samara)' photograph. All rights reserved. Used under licence.", 
         "year": "2006"
@@ -180,10 +180,9 @@ Example code:
 Set rights
 ^^^^^^^^^^
 
-There are obviously a broad range of rights with which you can release your creative work. For the moment, **Chapisha**
-supports only two of these:
-
-There are multiple appropriate rights, and two examples are below. Modify as you require.
+This refers to the `long_rights` you can set, and which you may wish to adjust for presentation on the colophon page.
+There are obviously a broad range of rights with which you can release your creative work. Here are two examples which
+you can modify as you require.
 
 * Commercial copyright with all rights reserved:
 
@@ -440,15 +439,14 @@ class CreateWork:
             self.metadata.contributor.append(Contributor(**contributor))
         _c.save_json(self.metadata.dict(by_alias=True), self.directory / _c.DEFAULT_METADATA_SETTINGS, overwrite=True)
 
-    def add_contributor(self, 
-                        contributor: Contributor):
+    def add_contributor(self, contributor: Contributor):
         """
         Add a contributor to the list of those supporting the creation of the work. `contributor` is defined as a dict:
         
         .. code-block:: python
 
             contributor = {
-                "id": "artist",
+                "role": "artist",
                 "name": "Great Artist",
                 "year": "2021",
                 "terms": "Public Domain."
@@ -457,7 +455,7 @@ class CreateWork:
         Parameters
         ----------
         contributor: Contributor
-            Include the types of contributor who supported the creation of the work. `id`: `artist`, `editor`, `translator`.
+            Include the types of contributor who supported the creation of the work. `role`: `artist`, `editor`, `translator`.
 
         Raises
         ------
@@ -489,34 +487,31 @@ class CreateWork:
 
     def set_rights(self, rights: [str, list[str]]):
         """
-        Set publication rights for creative work. Provide as a string, or list of strings if it is on multiple 
+        Set publication `long_rights` for creative work. Provide as a string, or list of strings if it is on multiple 
         paragraphs.
 
         There are multiple appropriate rights, and two examples are below. Modify as you require.
 
         * Commercial copyright with all rights reserved:
 
-        .. code-block:: python
-
-            ["The right of the creator to be identified as the author of the Work has been asserted by them in 
-              accordance with the Copyright, Designs and Patents Act 1988. This creator supports copyright. Copyright 
-              gives creators space to explore and provides for their long-term ability to sustain themselves from 
-              their work. Thank you for buying this work and for complying with copyright laws by not reproducing, 
-              scanning, or distributing any part of it without permission. Your support will contribute to future 
-              works by the creator."]
+            The right of the creator to be identified as the author of the Work has been asserted by them in 
+            accordance with the Copyright, Designs and Patents Act 1988. This creator supports copyright. Copyright 
+            gives creators space to explore and provides for their long-term ability to sustain themselves from 
+            their work. Thank you for buying this work and for complying with copyright laws by not reproducing, 
+            scanning, or distributing any part of it without permission. Your support will contribute to future 
+            works by the creator.
         
         * Commercial copyright but licenced for distribution under Attribution-NonCommercial-ShareAlike 4.0 International (`CC BY-NC-SA 4.0 <https://creativecommons.org/licenses/by-nc-sa/4.0/>`_):
 
-        .. code-block:: python
-
-            ["You are free to copy and redistribute the Work in any medium or format, and remix, transform, and build 
-              upon the Work. The creator cannot revoke these freedoms as long as you follow the license terms.",
-             "In return: You may not use the material for commercial purposes. You must give appropriate credit, provide 
-              a link to this license, and indicate if changes were made. You may do so in any reasonable manner, but not
-              in any way that suggests the creator endorses you or your use. If you remix, transform, or build upon the 
-              material, you must distribute your contributions under the same license as the original. You may not apply 
-              legal terms or technological measures that legally restrict others from doing anything the license 
-              permits."]
+            You are free to copy and redistribute the Work in any medium or format, and remix, transform, and build 
+            upon the Work. The creator cannot revoke these freedoms as long as you follow the license terms.
+            
+            In return: You may not use the material for commercial purposes. You must give appropriate credit, provide 
+            a link to this license, and indicate if changes were made. You may do so in any reasonable manner, but not
+            in any way that suggests the creator endorses you or your use. If you remix, transform, or build upon the 
+            material, you must distribute your contributions under the same license as the original. You may not apply 
+            legal terms or technological measures that legally restrict others from doing anything the license 
+            permits.
 
         Parameters
         ----------
@@ -528,7 +523,7 @@ class CreateWork:
             raise PermissionError(e)
         if isinstance(rights, str):
             rights = [rights]
-        self.metadata.rights = rights
+        self.metadata.long_rights = rights
         _c.save_json(self.metadata.dict(by_alias=True), self.directory / _c.DEFAULT_METADATA_SETTINGS, overwrite=True)
 
     ############################################################################
