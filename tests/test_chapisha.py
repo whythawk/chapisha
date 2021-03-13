@@ -50,5 +50,7 @@ class TestCreateWork:
         work.set_dedication(DEDICATION)
         work.set_rights(RIGHTS)
         work.build()
-        assert work.validate()
+        result = work.validate()
+        print(result.messages)
+        assert result.valid
 

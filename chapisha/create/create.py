@@ -626,4 +626,4 @@ class CreateWork:
         epub_path = self.directory.parent / F"{self.work_name}.epub"
         _c.check_source(epub_path)
         result = EpubCheck(epub_path)
-        return result.valid
+        return result
