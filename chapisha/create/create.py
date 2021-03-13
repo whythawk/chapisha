@@ -276,7 +276,8 @@ import filetype
 
 from ..models.metadata import WorkMetadata, Contributor
 from ..models.matter import Matter, MatterPartition
-from ..helpers import coreio as _c, pages, formats, UpdateZipFile
+from ..helpers import pages, formats, coreio as _c
+from ..helpers.updatezipfile import UpdateZipFile
 
 class CreateWork:
     """
@@ -552,11 +553,6 @@ class CreateWork:
         with UpdateZipFile(epub_path, "a") as w:
             # REMOVES
             REMOVES = ["EPUB/styles/stylesheet1.css", "EPUB/text/title_page.xhtml", "EPUB/nav.xhtml"]
-            for remove in REMOVES:
-                try:
-                    w.remove_file(remove)
-                except KeyError:
-                    continue
             # DEFAULT COMPONENTS
             DEFAULT = [(self.source_path / "css" / "core.css", "EPUB/css/core.css"),
                     (self.source_path / "images" / "logo.svg", "EPUB/images/logo.svg"),
@@ -593,7 +589,7 @@ class CreateWork:
                     continue
                 if file_as != chapter:
                     # If delete and then re-add same file, causes ZipFile confusion
-                    w.remove_file(chapter)
+                    REMOVES.append(chapter)
                 # Restructure chapter xml into standard format
                 chapter_xml = pages.restructure_chapter(chapter_xml)
                 chapter_title = chapter_xml.title.string
@@ -604,10 +600,10 @@ class CreateWork:
             # NOTE, these are not only to be added to the manifest, but the folder renamed as well
             image_manifest = [f.replace("EPUB/", "") for f in w.namelist() if f.startswith("EPUB/images/")]
             for img in [f for f in w.namelist() if f.startswith("EPUB/media/")]:
+                REMOVES.append(img)
                 new_img = img.replace("/media/", "/images/")
                 try:
                     old_img = w.read(img)
-                    w.remove_file(img)
                     w.writestr(new_img, old_img)
                 except KeyError:
                     continue
@@ -618,6 +614,12 @@ class CreateWork:
             w.writestr("EPUB/toc.ncx", pages.create_toc_ncx(self.metadata, spine))
             # ADD toc.xhtml
             w.writestr("EPUB/toc.xhtml", pages.create_toc_xhtml(self.metadata, spine))
+            # PERFORM REMOVES
+            for remove in REMOVES:
+                try:
+                    w.remove_file(remove)
+                except KeyError:
+                    continue
 
     def validate(self) -> bool:
         """
@@ -626,4 +628,4 @@ class CreateWork:
         epub_path = self.directory.parent / F"{self.work_name}.epub"
         _c.check_source(epub_path)
         result = EpubCheck(epub_path)
-        return result
+        return result.valid
