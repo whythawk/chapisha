@@ -12,7 +12,7 @@ METADATA = {
     "description": "Years after the events of \"Lament for the Fallen\", Isaiah tells of the myth of Usan Abasi, who was punished by the Sky God to spend eternity in the form of a brass bowl and imprisoned within a vast termite mountain. Now the ceremony which ensures that Usan Abasi remains dormant has failed, and his ancient evil awakes. A free, stand-alone short-story set in the city of Ewuru and linking \"Lament for the Fallen\" to a forthcoming novel.",
     "language": "en",
     "creator": ["Gavin Chait"],
-    "rights": ["The right of the creator to be identified as the author of the Work has been asserted by them in accordance with the Copyright, Designs and Patents Act 1988. This creator supports copyright. Copyright gives creators space to explore and provides for their long-term ability to sustain themselves from their work. Thank you for buying this work and for complying with copyright laws by not reproducing, scanning, or distributing any part of it without permission. Your support will contribute to future works by the creator."],
+    "rights": "Attribution-NonCommercial-ShareAlike 4.0 International.",
     "publisher": "Qwyre Publishing",
     "publisher_uri": "https://qwyre.com",
     "work-uri": "https://gavinchait.com",
@@ -20,7 +20,7 @@ METADATA = {
     "subject": ["science fiction", "african mythology"]
 }
 CONTRIBUTOR = {
-    "id": "artist", 
+    "role": "artist", 
     "name": "Rodd Halstead", 
     "terms": "Cover image 'Red Maple Fruit (Samara)' photograph. All rights reserved. Used under licence.", 
     "year": "2006"
