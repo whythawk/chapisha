@@ -2,7 +2,6 @@ from pathlib import Path
 
 from chapisha import __version__
 from chapisha import CreateWork
-from chapisha.helpers.updatezipfile import UpdateZipFile
 
 DIRECTORY = Path(__file__).resolve().parent / "data" 
 DOCUMENT = DIRECTORY / "usan-abasis-lament.docx"
@@ -51,14 +50,5 @@ class TestCreateWork:
         work.set_dedication(DEDICATION)
         work.set_rights(RIGHTS)
         work.build()
-        # Test 
-        epub_path = work.directory.parent / F"{work.work_name}.epub"
-        with UpdateZipFile(epub_path, "a") as w:
-            CHAPTERS = [f for f in w.namelist() if f.startswith("EPUB/text/ch")]
-            CHAPTERS.sort()
-            for chapter in CHAPTERS:
-                print(chapter)
-        result = work.validate()
-        print(result.messages)
-        assert result.valid
+        assert work.validate()
 
