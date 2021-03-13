@@ -12,9 +12,10 @@ There are only a small number of steps required to create your `.epub`, and **Ch
 stylesheet and take care of document structure:
 
 - Set the working directory where you want to create your `.epub`,
-- Define and validate the metadata required for your creative work,
-- Set the `.docx` file to import into the working directory,
-- Set the cover image to import into the working directory,
+- Define and validate the metadata required for the creative work,
+- Copy the `docx` file to import into the working directory,
+- Copy the cover image to import into the working directory,
+- Define and add any contributors, such as cover artist,
 - Define your creative work's publication rights,
 - Add in an optional dedication,
 - Build your creative work as an EPUB3 standards-compliant ebook.
@@ -60,6 +61,6 @@ as an ebook.
 
 Other licenced elements:
 
-* [Samara logo](chapisha/helpers/images/logo.png) is copyright [Whythawk](https://whythawk.com) and [Qwyre](https://gavinchait.com).
-* [Cover photo](tests/data/cover.jpg) is copyright Rodd Halstead, licenced under commercial terms to Whythawk, and used here for test purposes.
-* [Usan Abasi's Lament](https://gavinchait.com/usan-abasis-lament/) is copyright Gavin Chait, licenced [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) and used here for test purposes.
+- [Samara logo](chapisha/helpers/images/logo.png) is copyright [Whythawk](https://whythawk.com) and [Qwyre](https://gavinchait.com).
+- [Cover photo](tests/data/cover.jpg) is copyright Rodd Halstead, licenced under commercial terms to Whythawk, and used here for test purposes.
+- [Usan Abasi's Lament](https://gavinchait.com/usan-abasis-lament/) is copyright Gavin Chait, licenced [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) and used here for test purposes.
