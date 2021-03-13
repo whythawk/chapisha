@@ -1,3 +1,4 @@
+dist: focal
 language: python
 python:
   - "3.9.1"
@@ -11,4 +12,5 @@ install:
   - poetry shell
 # command to run tests
 script:
+  - pytest -rP
   - pytest
