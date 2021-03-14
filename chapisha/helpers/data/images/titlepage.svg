@@ -9,16 +9,16 @@
 		}
 
 		.title{
-			font-size: 93.56725311px;
+			font-size: 90px;
 		}
 
 		.author{
-			font-size: 70.17543793px;
+			font-size: 75px;
 		}
 
 		.contributor-descriptor{
 			font-family: "PT Serif";
-			font-size: 42.5079689px;
+			font-size: 40px;
 			font-style: italic;
 			letter-spacing: 0;
 		}

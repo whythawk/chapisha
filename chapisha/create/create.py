@@ -275,7 +275,7 @@ import filetype
 
 from ..models.metadata import WorkMetadata, Contributor
 from ..models.matter import Matter, MatterPartition
-from ..helpers import pages, formats, coreio as _c
+from ..helpers import pages, coreio as _c
 from ..helpers.updatezipfile import UpdateZipFile
 
 class CreateWork:
@@ -588,7 +588,9 @@ class CreateWork:
                 # Restructure chapter xml into standard format
                 chapter_xml = pages.restructure_chapter(chapter_xml)
                 chapter_title = chapter_xml.title.string
-                self.metadata.word_count += formats.get_word_count(str(chapter_xml))
+                # Count the words (XHTML and HTML treated differently by BeautifulSoup, so first extract `section`)
+                words = BeautifulSoup(str(chapter_xml.section), "lxml").get_text()
+                self.metadata.word_count += len(words.replace("\n", " ").replace("  ", " ").strip().split())
                 w.writestr(file_as, str(chapter_xml))
                 spine.append(Matter(partition=MatterPartition.body, title=chapter_title))
             # PANDOC MAY STILL ADD IMAGES FOUND IN THE WORK WHICH WE NEED TO DISCOVER AND ADD TO THE MANIFEST
