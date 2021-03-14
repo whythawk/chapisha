@@ -33,7 +33,10 @@ class DublinCoreMetadata(BaseModel):
     identifier: str = Field(default_factory=get_urn,
                             description="UUID, DOI or ISBN of the creative work. A UUID will be generated if not included.")
     title: str = Field(..., description="Name given to the creative work.")
-    language: str = Field(..., description="Specify the language of the creative work. Two letter code defined by ISO 639-1.")
+    language: str = Field(default_factory="en", 
+                          description="Specify the language of the creative work. Two letter code defined by ISO 639-1.")
+    rights: str = Field(default_factory="All rights reserved.", 
+                        description="A short, single-sentence statement of copyright and publication terms for the creative work, e.g. 'All rights reserved.' or 'Attribution-NonCommercial-ShareAlike 4.0 International.'")
     description: str = Field(None, description="A short, single-sentence summary of the creative work.")
     creator: list[str] = Field(..., description="Name of a person, organisation, etc. responsible for the creation of the work. May be more than one.")
     contributor: list[Contributor] = Field(None, description="Name of a person, organisation, etc. that played a secondary role - such as an editor - in the creation of the work. May be more than one.")
@@ -41,7 +44,6 @@ class DublinCoreMetadata(BaseModel):
                           description="The publication date of the creative work. Provide in ISO format, YYYY-MM-DD.")
     subject: list[str] = Field(None, description="The subject, or tag, of the creative work. May be more than one.")
     publisher: str = Field(None, description="Name of a person, organisation, etc.  responsible for making the creative work available.")
-    rights: str = Field(..., description="A short, single-sentence statement of copyright and publication terms for the creative work, e.g. 'All rights reserved.' or 'Attribution-NonCommercial-ShareAlike 4.0 International.'")
         
 class WorkMetadata(DublinCoreMetadata):
     """
@@ -50,8 +52,8 @@ class WorkMetadata(DublinCoreMetadata):
     """
     long_description: Optional[str] = Field(None, alias="long-description", 
                                             description="The pitch, or jacket-cover, description of the creative work.")
-    long_rights: list[str] = Field(None, alias="long-rights",
-                                   description="Information about copyright held in and over the creative work. Formatted as you wish it to appear.")
+    long_rights: Optional[list[str]] = Field(None, alias="long-rights",
+                                             description="Information about copyright held in and over the creative work. Formatted as you wish it to appear.")
     work_uri: Optional[HttpUrl] = Field(None, alias="work-uri", 
                                         description="The URI for your creative work.")
     publisher_uri: Optional[HttpUrl] = Field(None, alias="publisher-uri", 
