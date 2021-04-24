@@ -302,7 +302,7 @@ import filetype
 
 from ..models.metadata import WorkMetadata, Contributor
 from ..models.matter import Matter, MatterPartition
-from ..helpers import pages, coreio as _c
+from ..helpers import pages, formats, coreio as _c
 from ..helpers.updatezipfile import UpdateZipFile
 
 class CreateWork:
@@ -385,6 +385,18 @@ class CreateWork:
         -------
         bool
         """
+        # Dict snake_case fields need to be hyphenated for import
+        # This as a result of alias names in model
+        if isinstance(metadata, dict):
+            for k in [k for k in metadata.keys()]:
+                hyphenated = "-".join(k.split("_"))
+                metadata[hyphenated] = metadata.pop(k)
+            # Rename 'isodate' if it exists
+            if "isodate" in metadata:
+                metadata["date"] = metadata.pop("isodate")
+            # Fix "long-rights" if needed
+            if "long-rights" in metadata:
+                metadata["long-rights"] = formats.get_text_paragraphs(metadata["long-rights"])
         # Create a temporary WorkMetadata model to hold updated metadata
         updated_metadata = WorkMetadata(**metadata)
         # And update the original data

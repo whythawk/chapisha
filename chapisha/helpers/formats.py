@@ -76,7 +76,7 @@ def get_text_paragraphs(text: str) -> list[str]:
     if text:
         if isinstance(text, list):
             text = "\n".join(text)
-        NEWLINES_RE = re.compile(r"\n{2,}")
+        NEWLINES_RE = re.compile(r"\n{1,}")
         text = text.strip("\n")  # remove leading and trailing "\n"
-        return [p for p in NEWLINES_RE.split(text) if p.strip()]
+        return [p.strip() for p in NEWLINES_RE.split(text) if p.strip()]
     return []
