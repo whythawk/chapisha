@@ -33,9 +33,9 @@ class DublinCoreMetadata(BaseModel):
     identifier: str = Field(default_factory=get_urn,
                             description="UUID, DOI or ISBN of the creative work. A UUID will be generated if not included.")
     title: str = Field(..., description="Name given to the creative work.")
-    language: str = Field(default_factory="en", 
+    language: str = Field(default="en", 
                           description="Specify the language of the creative work. Two letter code defined by ISO 639-1.")
-    rights: str = Field(default_factory="All rights reserved.", 
+    rights: str = Field(default="All rights reserved.", 
                         description="A short, single-sentence statement of copyright and publication terms for the creative work, e.g. 'All rights reserved.' or 'Attribution-NonCommercial-ShareAlike 4.0 International.'")
     description: str = Field(None, description="A short, single-sentence summary of the creative work.")
     creator: list[str] = Field(..., description="Name of a person, organisation, etc. responsible for the creation of the work. May be more than one.")

@@ -3,6 +3,7 @@ Page format and support tools.
 """
 
 from PIL import ImageDraw, ImageFont, Image
+import re
 from . import coreio as _c
 
 DIRECTORY = _c.get_helper_path() / "data" / "fonts"
@@ -57,3 +58,25 @@ def get_text_rows(text: str, font_size: int = TITLE_SIZE) -> list[str]:
         # It worked
         fits_titlepage_width = True
     return text_rows
+
+def get_text_paragraphs(text: str) -> list[str]:
+    """
+    Return a given text as a list of paragraphs.
+
+    Parameters
+    ----------
+    text: str
+        The text string for splitting into paragraphs
+
+    Returns
+    -------
+    list of str
+    """
+    # https://stackoverflow.com/a/64863601/295606
+    if text:
+        if isinstance(text, list):
+            text = "\n".join(text)
+        NEWLINES_RE = re.compile(r"\n{2,}")
+        text = text.strip("\n")  # remove leading and trailing "\n"
+        return [p for p in NEWLINES_RE.split(text) if p.strip()]
+    return []

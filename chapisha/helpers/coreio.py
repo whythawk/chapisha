@@ -23,6 +23,10 @@ JSONType = Union[str, int, float, bool, None, dict[str, Any], list[Any]]
 ### Path management
 ###################################################################################################
 
+DEFAULT_BASE64_TYPES = {
+    "cover": "^data:image\/(png|jpe?g);base64,",
+    "work": "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,"
+}
 DEFAULT_METADATA_SETTINGS = "work_metadata.json"
 DEFAULT_DATA_DIRECTORY = Path(__file__).resolve().parent / "data"
 
