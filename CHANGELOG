@@ -2,3 +2,4 @@
 - 0.2.0: Refactored to use pydantic, and removed eBookLib.
 - 0.3.0: Refactored and improved documentation.
 - 0.4.0: Added support for non-stateless builds and imports of base64-encoded docx and image files.
+- 0.5.0: Support for strings and lists of strings if provided as "long-rights".

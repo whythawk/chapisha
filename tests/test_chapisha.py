@@ -46,7 +46,7 @@ DEDICATION_STRING = "\nFor those who leave.\n\nFor those who remain.\n"
 class TestCreateWork:
 
     def test_version(self):
-        assert __version__ == "0.4.0"
+        assert __version__ == "0.5.0"
 
     def test_stateless_build(self, tmpdir):
         work = CreateWork(tmpdir, stateless=True)
