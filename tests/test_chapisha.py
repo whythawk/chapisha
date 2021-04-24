@@ -1,4 +1,5 @@
 from pathlib import Path
+import base64
 
 from chapisha import __version__
 from chapisha import CreateWork
@@ -6,7 +7,7 @@ from chapisha import CreateWork
 DIRECTORY = Path(__file__).resolve().parent / "data" 
 DOCUMENT = DIRECTORY / "usan-abasis-lament.docx"
 COVER = DIRECTORY / "cover.jpg"
-METADATA = {
+METADATA_FULL = {
     "identifier": "isbn:9780993191459",
     "title": "Usan Abasi's Lament",
     "description": "Years after the events of \"Lament for the Fallen\", Isaiah tells of the myth of Usan Abasi, who was punished by the Sky God to spend eternity in the form of a brass bowl and imprisoned within a vast termite mountain. Now the ceremony which ensures that Usan Abasi remains dormant has failed, and his ancient evil awakes. A free, stand-alone short-story set in the city of Ewuru and linking \"Lament for the Fallen\" to a forthcoming novel.",
@@ -18,6 +19,11 @@ METADATA = {
     "work-uri": "https://gavinchait.com",
     "date": "2017-07-23",
     "subject": ["science fiction", "african mythology"]
+}
+METADATA_PARTIAL = {
+    "title": "Usan Abasi's Lament",
+    "creator": ["Gavin Chait"],
+    "rights": "Attribution-NonCommercial-ShareAlike 4.0 International.",
 }
 CONTRIBUTOR = {
     "role": "artist", 
@@ -35,20 +41,34 @@ DEDICATION = [
     "For the wings and tail.",
     "But most, for her"
 ]
+DEDICATION_STRING = "\nFor those who leave.\n\nFor those who remain.\n"
 
 class TestCreateWork:
 
     def test_version(self):
-        assert __version__ == '0.3.0'
+        assert __version__ == "0.4.0"
 
-    def test_build(self, tmpdir):
-        work = CreateWork(tmpdir)
-        work.set_metadata(METADATA)
+    def test_stateless_build(self, tmpdir):
+        work = CreateWork(tmpdir, stateless=True)
+        work.set_metadata(METADATA_FULL)
         work.set_document(DOCUMENT)
         work.set_cover(COVER)
         work.add_contributor(CONTRIBUTOR)
         work.set_dedication(DEDICATION)
         work.set_rights(RIGHTS)
+        work.build()
+        assert work.validate()
+
+    def test_partial_non_stateless_build(self, tmpdir):
+        work = CreateWork(tmpdir)
+        work.set_metadata(METADATA_PARTIAL)
+        with open(DOCUMENT, "rb") as d:
+            work_text = base64.b64encode(d.read()).decode("utf-8")
+        work.set_document(work_text)
+        with open(COVER, "rb") as d:
+            cover_img = base64.b64encode(d.read()).decode("utf-8")
+        work.set_cover(cover_img)
+        work.set_dedication(DEDICATION_STRING)
         work.build()
         assert work.validate()
 
