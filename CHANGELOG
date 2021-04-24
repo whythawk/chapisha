@@ -1,2 +1,4 @@
 - 0.1.0: Initial release with epub conversion.
 - 0.2.0: Refactored to use pydantic, and removed eBookLib.
+- 0.3.0: Refactored and improved documentation.
+- 0.4.0: Added support for non-stateless builds and imports of base64-encoded docx and image files.

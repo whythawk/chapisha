@@ -13,8 +13,8 @@ stylesheet and take care of document structure:
 
 - Set the working directory where you want to create your `.epub`,
 - Define and validate the metadata required for the creative work,
-- Copy the `docx` file to import into the working directory,
-- Copy the cover image to import into the working directory,
+- Import the `docx` file,
+- Import the cover image,
 - Define and add any contributors, such as cover artist,
 - Define your creative work's publication rights,
 - Add in an optional dedication,
