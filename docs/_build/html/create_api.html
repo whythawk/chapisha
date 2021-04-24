@@ -166,7 +166,7 @@
 <p>The <cite>CreateWork</cite> class defines the steps for creating an epub.</p>
 <dl class="py class">
 <dt id="chapisha.create.CreateWork">
-<em class="property">class </em><code class="sig-prename descclassname">chapisha.create.</code><code class="sig-name descname">CreateWork</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">directory</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">metadata</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>chapisha.models.metadata.WorkMetadata<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#chapisha.create.CreateWork" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">chapisha.create.</code><code class="sig-name descname">CreateWork</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">directory</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">metadata</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>chapisha.models.metadata.WorkMetadata<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">stateless</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#chapisha.create.CreateWork" title="Permalink to this definition">¶</a></dt>
 <dd><p>Publish a standards compliant EPUB3 creative work from a source Microsoft Word <cite>docx</cite> document, and
 define its metadata, cover and publishing rights.</p>
 <p>If the EPUB file already exists, then publishing this work will overwrite it.</p>
@@ -210,11 +210,12 @@ schema, with descriptions, and requirements, is listed by <cite>get_metadata_sch
 
 <dl class="py method">
 <dt id="chapisha.create.CreateWork.set_document">
-<code class="sig-name descname">set_document</code><span class="sig-paren">(</span><em class="sig-param">source: [&lt;class 'pathlib.Path'&gt;, &lt;class 'bytes'&gt;]</em><span class="sig-paren">)</span><a class="headerlink" href="#chapisha.create.CreateWork.set_document" title="Permalink to this definition">¶</a></dt>
-<dd><p>Import source <cite>docx</cite> document and save to the working directory..</p>
+<code class="sig-name descname">set_document</code><span class="sig-paren">(</span><em class="sig-param">source: [&lt;class 'pathlib.Path'&gt;, &lt;class 'bytes'&gt;, &lt;class 'str'&gt;]</em><span class="sig-paren">)</span><a class="headerlink" href="#chapisha.create.CreateWork.set_document" title="Permalink to this definition">¶</a></dt>
+<dd><p>Import source <cite>docx</cite> document and, if stateless, save to the working directory. If you’re finding errors in
+the build step, it could be you need to convert your base64 string to “utf-8” (<cite>source.decode(“utf-8”)</cite>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>source</strong> (<em>Path</em><em> or </em><em>bytes</em>) – Filename to open, or bytes from an opened file</p>
+<dd class="field-odd"><p><strong>source</strong> (<em>Path</em><em>, </em><em>bytes</em><em>, or </em><em>str</em>) – Filename to open, bytes from an opened file, or a base64 string</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
@@ -228,7 +229,9 @@ schema, with descriptions, and requirements, is listed by <cite>get_metadata_sch
 <dl class="py method">
 <dt id="chapisha.create.CreateWork.set_cover">
 <code class="sig-name descname">set_cover</code><span class="sig-paren">(</span><em class="sig-param">source: [&lt;class 'pathlib.Path'&gt;, &lt;class 'bytes'&gt;], contributor: Optional[chapisha.models.metadata.Contributor] = None</em><span class="sig-paren">)</span><a class="headerlink" href="#chapisha.create.CreateWork.set_cover" title="Permalink to this definition">¶</a></dt>
-<dd><p>Import cover image and save to the working directory, along with any rights and contributor information.</p>
+<dd><p>Import cover image and, if stateless, save to the working directory, along with any rights and contributor
+information. If you’re finding errors in the build step, it could be you need to convert your base64 string to
+“utf-8” (<cite>source.decode(“utf-8”)</cite>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -250,7 +253,7 @@ schema, with descriptions, and requirements, is listed by <cite>get_metadata_sch
 <code class="sig-name descname">add_contributor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">contributor</span><span class="p">:</span> <span class="n">chapisha.models.metadata.Contributor</span></em><span class="sig-paren">)</span><a class="headerlink" href="#chapisha.create.CreateWork.add_contributor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a contributor to the list of those supporting the creation of the work. <cite>contributor</cite> is defined as a dict:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">contributor</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;artist&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;artist&quot;</span><span class="p">,</span>
     <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Great Artist&quot;</span><span class="p">,</span>
     <span class="s2">&quot;year&quot;</span><span class="p">:</span> <span class="s2">&quot;2021&quot;</span><span class="p">,</span>
     <span class="s2">&quot;terms&quot;</span><span class="p">:</span> <span class="s2">&quot;Public Domain.&quot;</span>
@@ -259,7 +262,7 @@ schema, with descriptions, and requirements, is listed by <cite>get_metadata_sch
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>contributor</strong> (<em>Contributor</em>) – Include the types of contributor who supported the creation of the work. <cite>id</cite>: <cite>artist</cite>, <cite>editor</cite>, <cite>translator</cite>.</p>
+<dd class="field-odd"><p><strong>contributor</strong> (<em>Contributor</em>) – Include the types of contributor who supported the creation of the work. <cite>role</cite>: <cite>artist</cite>, <cite>editor</cite>, <cite>translator</cite>.</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><p><strong>PermissionError</strong> – if metadata not yet validated.:</p>
@@ -281,33 +284,33 @@ schema, with descriptions, and requirements, is listed by <cite>get_metadata_sch
 <dl class="py method">
 <dt id="chapisha.create.CreateWork.set_rights">
 <code class="sig-name descname">set_rights</code><span class="sig-paren">(</span><em class="sig-param">rights: [&lt;class 'str'&gt;, list[str]]</em><span class="sig-paren">)</span><a class="headerlink" href="#chapisha.create.CreateWork.set_rights" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set publication rights for creative work. Provide as a string, or list of strings if it is on multiple
+<dd><p>Set publication <cite>long_rights</cite> for creative work. Provide as a string, or list of strings if it is on multiple
 paragraphs.</p>
 <p>There are multiple appropriate rights, and two examples are below. Modify as you require.</p>
-<ul class="simple">
-<li><p>Commercial copyright with all rights reserved:</p></li>
+<ul>
+<li><p>Commercial copyright with all rights reserved:</p>
+<blockquote>
+<div><p>The right of the creator to be identified as the author of the Work has been asserted by them in
+accordance with the Copyright, Designs and Patents Act 1988. This creator supports copyright. Copyright
+gives creators space to explore and provides for their long-term ability to sustain themselves from
+their work. Thank you for buying this work and for complying with copyright laws by not reproducing,
+scanning, or distributing any part of it without permission. Your support will contribute to future
+works by the creator.</p>
+</div></blockquote>
+</li>
+<li><p>Commercial copyright but licenced for distribution under Attribution-NonCommercial-ShareAlike 4.0 International (<a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>):</p>
+<blockquote>
+<div><p>You are free to copy and redistribute the Work in any medium or format, and remix, transform, and build
+upon the Work. The creator cannot revoke these freedoms as long as you follow the license terms.</p>
+<p>In return: You may not use the material for commercial purposes. You must give appropriate credit, provide
+a link to this license, and indicate if changes were made. You may do so in any reasonable manner, but not
+in any way that suggests the creator endorses you or your use. If you remix, transform, or build upon the
+material, you must distribute your contributions under the same license as the original. You may not apply
+legal terms or technological measures that legally restrict others from doing anything the license
+permits.</p>
+</div></blockquote>
+</li>
 </ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s2">&quot;The right of the creator to be identified as the author of the Work has been asserted by them in</span>
-  <span class="n">accordance</span> <span class="k">with</span> <span class="n">the</span> <span class="n">Copyright</span><span class="p">,</span> <span class="n">Designs</span> <span class="ow">and</span> <span class="n">Patents</span> <span class="n">Act</span> <span class="mf">1988.</span> <span class="n">This</span> <span class="n">creator</span> <span class="n">supports</span> <span class="n">copyright</span><span class="o">.</span> <span class="n">Copyright</span>
-  <span class="n">gives</span> <span class="n">creators</span> <span class="n">space</span> <span class="n">to</span> <span class="n">explore</span> <span class="ow">and</span> <span class="n">provides</span> <span class="k">for</span> <span class="n">their</span> <span class="n">long</span><span class="o">-</span><span class="n">term</span> <span class="n">ability</span> <span class="n">to</span> <span class="n">sustain</span> <span class="n">themselves</span> <span class="kn">from</span>
-  <span class="nn">their</span> <span class="n">work</span><span class="o">.</span> <span class="n">Thank</span> <span class="n">you</span> <span class="k">for</span> <span class="n">buying</span> <span class="n">this</span> <span class="n">work</span> <span class="ow">and</span> <span class="k">for</span> <span class="n">complying</span> <span class="k">with</span> <span class="n">copyright</span> <span class="n">laws</span> <span class="n">by</span> <span class="ow">not</span> <span class="n">reproducing</span><span class="p">,</span>
-  <span class="n">scanning</span><span class="p">,</span> <span class="ow">or</span> <span class="n">distributing</span> <span class="nb">any</span> <span class="n">part</span> <span class="n">of</span> <span class="n">it</span> <span class="n">without</span> <span class="n">permission</span><span class="o">.</span> <span class="n">Your</span> <span class="n">support</span> <span class="n">will</span> <span class="n">contribute</span> <span class="n">to</span> <span class="n">future</span>
-  <span class="n">works</span> <span class="n">by</span> <span class="n">the</span> <span class="n">creator</span><span class="o">.</span><span class="s2">&quot;]</span>
-</pre></div>
-</div>
-<ul class="simple">
-<li><p>Commercial copyright but licenced for distribution under Attribution-NonCommercial-ShareAlike 4.0 International (<a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>):</p></li>
-</ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s2">&quot;You are free to copy and redistribute the Work in any medium or format, and remix, transform, and build</span>
-  <span class="n">upon</span> <span class="n">the</span> <span class="n">Work</span><span class="o">.</span> <span class="n">The</span> <span class="n">creator</span> <span class="n">cannot</span> <span class="n">revoke</span> <span class="n">these</span> <span class="n">freedoms</span> <span class="k">as</span> <span class="n">long</span> <span class="k">as</span> <span class="n">you</span> <span class="n">follow</span> <span class="n">the</span> <span class="n">license</span> <span class="n">terms</span><span class="o">.</span><span class="s2">&quot;,</span>
- <span class="s2">&quot;In return: You may not use the material for commercial purposes. You must give appropriate credit, provide</span>
-  <span class="n">a</span> <span class="n">link</span> <span class="n">to</span> <span class="n">this</span> <span class="n">license</span><span class="p">,</span> <span class="ow">and</span> <span class="n">indicate</span> <span class="k">if</span> <span class="n">changes</span> <span class="n">were</span> <span class="n">made</span><span class="o">.</span> <span class="n">You</span> <span class="n">may</span> <span class="n">do</span> <span class="n">so</span> <span class="ow">in</span> <span class="nb">any</span> <span class="n">reasonable</span> <span class="n">manner</span><span class="p">,</span> <span class="n">but</span> <span class="ow">not</span>
-  <span class="ow">in</span> <span class="nb">any</span> <span class="n">way</span> <span class="n">that</span> <span class="n">suggests</span> <span class="n">the</span> <span class="n">creator</span> <span class="n">endorses</span> <span class="n">you</span> <span class="ow">or</span> <span class="n">your</span> <span class="n">use</span><span class="o">.</span> <span class="n">If</span> <span class="n">you</span> <span class="n">remix</span><span class="p">,</span> <span class="n">transform</span><span class="p">,</span> <span class="ow">or</span> <span class="n">build</span> <span class="n">upon</span> <span class="n">the</span>
-  <span class="n">material</span><span class="p">,</span> <span class="n">you</span> <span class="n">must</span> <span class="n">distribute</span> <span class="n">your</span> <span class="n">contributions</span> <span class="n">under</span> <span class="n">the</span> <span class="n">same</span> <span class="n">license</span> <span class="k">as</span> <span class="n">the</span> <span class="n">original</span><span class="o">.</span> <span class="n">You</span> <span class="n">may</span> <span class="ow">not</span> <span class="n">apply</span>
-  <span class="n">legal</span> <span class="n">terms</span> <span class="ow">or</span> <span class="n">technological</span> <span class="n">measures</span> <span class="n">that</span> <span class="n">legally</span> <span class="n">restrict</span> <span class="n">others</span> <span class="kn">from</span> <span class="nn">doing</span> <span class="n">anything</span> <span class="n">the</span> <span class="n">license</span>
-  <span class="n">permits</span><span class="o">.</span><span class="s2">&quot;]</span>
-</pre></div>
-</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>rights</strong> (<em>str</em><em> or </em><em>list of str</em>) – Provide as a string, or list of strings for multiple paragraphs.</p>

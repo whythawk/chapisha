@@ -29,11 +29,8 @@ Why use it?
 There are a multitude of `.epub` conversion tools but few that support the day-to-day workflow and tools used by most
 jobbing writers: Microsoft Word.
 
-**Chapisha** draws on two powerful workhorses for document conversion and ebook creation, `Pandoc <https://pandoc.org/epub.html>`_
-and `EbookLib <http://docs.sourcefabric.org/projects/ebooklib/en/latest/index.html>`_, adding a simple, stateless Python
-frame around it. 
-
-**Chapisha** is stateless, which means you can also include it in a web application.
+**Chapisha** draws on `Pandoc <https://pandoc.org/epub.html>`_ for document conversion and ebook creation, adding a 
+simple, stateless Python frame around it, which means you can also include it in a web application.
 
 Licence
 -------

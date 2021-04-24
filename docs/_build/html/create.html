@@ -187,7 +187,10 @@ graphics.</p>
 </div>
 <div class="section" id="workflow">
 <h2>Workflow<a class="headerlink" href="#workflow" title="Permalink to this headline">¶</a></h2>
-<p>The publication process runs as follows:</p>
+<p>There are two main publication approaches, stateless and non-stateless. A non-stateless approach assumes you may be
+starting each step discretely (perhaps via a set of one-time network calls). The second maintains state, so you can
+complete the process in one step.</p>
+<p>The <em>stateless</em> publication process runs as follows:</p>
 <ul class="simple">
 <li><p>Set the working directory on creation,</p></li>
 <li><p>Define and validate the metadata required for the creative work,</p></li>
@@ -199,9 +202,20 @@ graphics.</p>
 <li><p>Build the creative work,</p></li>
 <li><p>Validate the work is EPUB3 standards compliant.</p></li>
 </ul>
-<p>The objective of the workflow is to support what may be a stateless process i.e. the individual steps first bring all
+<p>The objective of this workflow is to support what may be a stateless process i.e. the individual steps first bring all
 the data required to produce the creative work into a project directory, and then produces it. State does not need
 to be maintained between steps.</p>
+<p>The <em>non-stateless</em> process runs as follows:</p>
+<ul class="simple">
+<li><p>Define and validate the metadata required for the creative work,</p></li>
+<li><p>Supply the <cite>docx</cite> file as a base64 string,</p></li>
+<li><p>Copy the cover image as a base64 string,</p></li>
+<li><p>Add in an optional dedication,</p></li>
+<li><p>Build the creative work,</p></li>
+<li><p>Validate the work is EPUB3 standards compliant.</p></li>
+</ul>
+<p>The objective in a non-stateless workflow is to minimise disruption, and store the minimum amount of information. Only
+the epub itself will be saved, and then only because Pandoc does not support a memory-only epub build.</p>
 </div>
 <div class="section" id="build-your-work">
 <h2>Build your work<a class="headerlink" href="#build-your-work" title="Permalink to this headline">¶</a></h2>
@@ -211,30 +225,36 @@ to be maintained between steps.</p>
 <span class="n">work</span> <span class="o">=</span> <span class="n">CreateWork</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Where <cite>directory</cite> is the complete path to where you would like the EPUB created.</p>
+<p>Where <cite>directory</cite> is the complete path to where you would like the EPUB created. If you want a stateless workflow,
+set the <cite>stateless</cite> boolean to <cite>True</cite>. If you already have the <cite>metadata</cite> (perhaps via a web form), you can skip
+several steps and pick up again for setting the files and images.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">chapisha.create</span> <span class="kn">import</span> <span class="n">CreateWork</span>
+
+<span class="n">work</span> <span class="o">=</span> <span class="n">CreateWork</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">,</span> <span class="n">stateless</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="section" id="set-metadata">
 <h3>Set metadata<a class="headerlink" href="#set-metadata" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="https://www.dublincore.org/specifications/dublin-core/dces/">Dublin Core</a> is a vocabulary of fifteen properties for
-use in resource description. Three of them - <cite>title</cite>, <cite>identifier</cite> and <cite>language</cite> - are required. The <cite>language</cite> code
-is defined by the <a class="reference external" href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">ISO 679-1</a> standard (e.g. <cite>en</cite> for English,
-or <cite>fr</cite> for French).</p>
-<p>The official properties:</p>
+use in resource description. Four of them - <cite>title</cite>, <cite>identifier</cite>, <cite>language</cite> and <cite>rights</cite> - are required. The
+<cite>language</cite> code is defined by the <a class="reference external" href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">ISO 679-1</a> standard
+(e.g. <cite>en</cite> for English, or <cite>fr</cite> for French).</p>
+<p>Metadata properties:</p>
 <ul class="simple">
-<li><p><cite>identifier</cite>: UUID, DOI or ISBN of the creative work. A UUID be generated if not included.</p></li>
+<li><p><cite>identifier</cite>: UUID, DOI or ISBN of the creative work. A UUID will be generated if not included.</p></li>
 <li><p><cite>title</cite>: Name given to the creative work.</p></li>
 <li><p><cite>language</cite>: Specify the language of the creative work. Two letter code defined by ISO 639-1.</p></li>
 <li><p><cite>creator</cite>: Name of a person, organisation, etc. responsible for the creation of the work. May be more than one.</p></li>
+<li><p><cite>work_uri</cite>: The URI for your creative work.</p></li>
 <li><p><cite>contributor</cite>: Name of a person, organisation, etc. that played a secondary role - such as an editor - in the creation of the work. May be more than one.</p></li>
 <li><p><cite>date</cite>: The publication date of the creative work. Provide in ISO format, YYYY-MM-DD.</p></li>
 <li><p><cite>subject</cite>: The subject, or tag, of the creative work. May be more than one.</p></li>
 <li><p><cite>publisher</cite>: Name of a person, organisation, etc.  responsible for making the creative work available.</p></li>
-<li><p><cite>rights</cite>: Information about copyright held in and over the creative work. Formatted as you wish it to appear.</p></li>
-</ul>
-<p>In addition, you can provide a small number of properties to be included on the rights plate:</p>
-<ul class="simple">
-<li><p><cite>description</cite>: The pitch, or jacket-cover, description of the creative work.</p></li>
-<li><p><cite>work_uri</cite>: The URI for your creative work.</p></li>
 <li><p><cite>publisher_uri</cite>: The URI for the publisher of your creative work.</p></li>
+<li><p><cite>rights</cite>: A short, single-sentence statement of copyright and publication terms for the creative work, e.g. ‘All rights reserved.’ or ‘Attribution-NonCommercial-ShareAlike 4.0 International.’</p></li>
+<li><p><cite>long_rights</cite>: Lengthier description and information about copyright held in and over the creative work. Formatted as you wish it to appear.</p></li>
+<li><p><cite>description</cite>: A short, single-sentence summary of the creative work.</p></li>
+<li><p><cite>long_description</cite>: The pitch, or jacket-cover, description of the creative work.</p></li>
 </ul>
 <p>Create a paired dictionary of these properties. As example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">METADATA</span> <span class="o">=</span> <span class="p">{</span>
@@ -243,7 +263,8 @@ or <cite>fr</cite> for French).</p>
     <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Years after the events of &quot;</span><span class="n">Lament</span> <span class="k">for</span> <span class="n">the</span> <span class="n">Fallen</span><span class="s2">&quot;, Isaiah tells of the myth of Usan Abasi, who was punished by the Sky God to spend eternity in the form of a brass bowl and imprisoned within a vast termite mountain. Now the ceremony which ensures that Usan Abasi remains dormant has failed, and his ancient evil awakes. A free, stand-alone short-story set in the city of Ewuru and linking &quot;</span><span class="n">Lament</span> <span class="k">for</span> <span class="n">the</span> <span class="n">Fallen</span><span class="s2">&quot; to a forthcoming novel.&quot;</span><span class="p">,</span>
     <span class="s2">&quot;language&quot;</span><span class="p">:</span> <span class="s2">&quot;en&quot;</span><span class="p">,</span>
     <span class="s2">&quot;creator&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Gavin Chait&quot;</span><span class="p">],</span>
-    <span class="s2">&quot;rights&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;The right of the creator to be identified as the author of the Work has been asserted by them in accordance with the Copyright, Designs and Patents Act 1988. This creator supports copyright. Copyright gives creators space to explore and provides for their long-term ability to sustain themselves from their work. Thank you for buying this work and for complying with copyright laws by not reproducing, scanning, or distributing any part of it without permission. Your support will contribute to future works by the creator.&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;rights&quot;</span><span class="p">:</span> <span class="s2">&quot;All rights reserved.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;long_rights&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;The right of the creator to be identified as the author of the Work has been asserted by them in accordance with the Copyright, Designs and Patents Act 1988. This creator supports copyright. Copyright gives creators space to explore and provides for their long-term ability to sustain themselves from their work. Thank you for buying this work and for complying with copyright laws by not reproducing, scanning, or distributing any part of it without permission. Your support will contribute to future works by the creator.&quot;</span><span class="p">],</span>
     <span class="s2">&quot;publisher&quot;</span><span class="p">:</span> <span class="s2">&quot;Qwyre Publishing&quot;</span><span class="p">,</span>
     <span class="s2">&quot;publisher_uri&quot;</span><span class="p">:</span> <span class="s2">&quot;https://qwyre.com&quot;</span><span class="p">,</span>
     <span class="s2">&quot;work-uri&quot;</span><span class="p">:</span> <span class="s2">&quot;https://gavinchait.com&quot;</span><span class="p">,</span>
@@ -279,7 +300,7 @@ to a printed work.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">work</span><span class="o">.</span><span class="n">set_document</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Where <cite>source</cite> is the complete path to the source <cite>docx</cite> file.</p>
+<p>Where <cite>source</cite> is any of the complete path to the source <cite>docx</cite> file, a <cite>bytes</cite> file import, or a <cite>base64</cite> string.</p>
 </div>
 <div class="section" id="set-cover">
 <h3>Set cover<a class="headerlink" href="#set-cover" title="Permalink to this headline">¶</a></h3>
@@ -295,7 +316,7 @@ services providing openly-licenced, or even public domain, work for you to use.<
 </div>
 <p>Example code:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">CONTRIBUTOR</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;artist&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;artist&quot;</span><span class="p">,</span>
     <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Rodd Halstead&quot;</span><span class="p">,</span>
     <span class="s2">&quot;terms&quot;</span><span class="p">:</span> <span class="s2">&quot;Cover image &#39;Red Maple Fruit (Samara)&#39; photograph. All rights reserved. Used under licence.&quot;</span><span class="p">,</span>
     <span class="s2">&quot;year&quot;</span><span class="p">:</span> <span class="s2">&quot;2006&quot;</span>
@@ -304,20 +325,20 @@ services providing openly-licenced, or even public domain, work for you to use.<
 <span class="n">work</span><span class="o">.</span><span class="n">set_cover</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">contributor</span><span class="o">=</span><span class="n">CONTRIBUTOR</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Where <cite>source</cite> is the complete path to the image file.</p>
+<p>Where <cite>source</cite> is the complete path to the image file, a <cite>bytes</cite> file import, or a <cite>base64</cite> string.</p>
 </div>
 <div class="section" id="add-contributors">
 <h3>Add contributors<a class="headerlink" href="#add-contributors" title="Permalink to this headline">¶</a></h3>
 <p>You may have numerous contributors you wish to acknowledge. Fields are:</p>
 <ul class="simple">
-<li><p><cite>id_</cite>: Contributor identity, based on a specified list of <cite>artist</cite>, <cite>editor</cite> or <cite>translator</cite>.</p></li>
+<li><p><cite>role</cite>: Contributor identity, based on a specified list of <cite>artist</cite>, <cite>editor</cite> or <cite>translator</cite>.</p></li>
 <li><p><cite>name</cite>: Name of a person, organisation, etc. that played a secondary role - such as an editor - in the creation of the work.</p></li>
 <li><p><cite>terms</cite>: Information about copyright held by the rights-holder in and over their contribution to the creative work. Formatted as you wish it to appear.</p></li>
 <li><p><cite>year</cite>: The year of the contribution or publication of the contributor’s work.</p></li>
 </ul>
 <p>Example code:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">CONTRIBUTOR</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;artist&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;artist&quot;</span><span class="p">,</span>
     <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Rodd Halstead&quot;</span><span class="p">,</span>
     <span class="s2">&quot;terms&quot;</span><span class="p">:</span> <span class="s2">&quot;Cover image &#39;Red Maple Fruit (Samara)&#39; photograph. All rights reserved. Used under licence.&quot;</span><span class="p">,</span>
     <span class="s2">&quot;year&quot;</span><span class="p">:</span> <span class="s2">&quot;2006&quot;</span>
@@ -330,9 +351,9 @@ services providing openly-licenced, or even public domain, work for you to use.<
 </div>
 <div class="section" id="set-rights">
 <h3>Set rights<a class="headerlink" href="#set-rights" title="Permalink to this headline">¶</a></h3>
-<p>There are obviously a broad range of rights with which you can release your creative work. For the moment, <strong>Chapisha</strong>
-supports only two of these:</p>
-<p>There are multiple appropriate rights, and two examples are below. Modify as you require.</p>
+<p>This refers to the <cite>long_rights</cite> you can set, and which you may wish to adjust for presentation on the colophon page.
+There are obviously a broad range of rights with which you can release your creative work. Here are two examples which
+you can modify as you require.</p>
 <ul>
 <li><p>Commercial copyright with all rights reserved:</p>
 <blockquote>
