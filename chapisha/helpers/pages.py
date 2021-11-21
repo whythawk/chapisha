@@ -5,7 +5,7 @@ import datetime
 import zoneinfo
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup
-from typing import Optional
+from typing import Optional, List
 
 from . import coreio as _c
 from .updatezipfile import UpdateZipFile
@@ -28,7 +28,7 @@ TITLEPAGE_ROW_MARGIN = 20
 TITLEPAGE_AUTHOR_HEIGHT = 75
 SECTION_SPACER = 120
 
-def restructure_chapter(source: bytes):
+def restructure_chapter(source: bytes, title: Optional[str] = None):
     """
     Given an xml source, restructure the content into the default chapter xhtml format.
 
@@ -51,7 +51,14 @@ def restructure_chapter(source: bytes):
     with open(DATA_PATH / "xhtml" / DEFAULT_CHAPTER, "r+", encoding="utf-8") as dc:
         chapter = BeautifulSoup(dc.read(), "lxml")
         chapter.section.contents = source.section.contents
-        chapter.title.contents = source.title.contents
+        if source.h1:
+            chapter.title.string = " ".join(source.h1.getText().split())
+        elif not source.h1 and source.h2:
+            chapter.title.string = " ".join(source.h2.getText().split())
+        elif not source.h1 and not source.h2 and title:
+            chapter.title.string = " ".join(title.split())
+        else:
+            chapter.title.string = " ".join(source.title.getText().split())
         chapter.smooth()
     return chapter
 

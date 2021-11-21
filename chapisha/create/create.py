@@ -678,7 +678,7 @@ class CreateWork:
             CHAPTERS = [f for f in w.namelist() if f.startswith("EPUB/text/ch")]
             CHAPTERS.sort()
             self.metadata.word_count = 0
-            for chapter in CHAPTERS:
+            for i, chapter in enumerate(CHAPTERS):
                 file_as = F"EPUB/text/chapter-{chapter.split('.')[0][-1]}.xhtml"
                 try:
                     chapter_xml = w.read(chapter)
@@ -688,7 +688,7 @@ class CreateWork:
                     # If delete and then re-add same file, causes ZipFile confusion
                     REMOVES.append(chapter)
                 # Restructure chapter xml into standard format
-                chapter_xml = pages.restructure_chapter(chapter_xml)
+                chapter_xml = pages.restructure_chapter(chapter_xml, str(i))
                 chapter_title = chapter_xml.title.string
                 # Count the words (XHTML and HTML treated differently by BeautifulSoup, so first extract `section`)
                 words = BeautifulSoup(str(chapter_xml.section), "lxml").get_text()
