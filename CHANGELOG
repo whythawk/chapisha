@@ -4,3 +4,4 @@
 - 0.4.0: Added support for non-stateless builds and imports of base64-encoded docx and image files.
 - 0.5.0: Support for strings and lists of strings if provided as "long-rights".
 - 0.5.1: Small fix after a change in Pandoc which lost relationship between chapter Title and H1 elements.
+- 0.5.2: Dependency updates.
