@@ -1,7 +1,7 @@
 # Chapisha: docx to standards-compliant epub3 conversion
 
 [![Documentation Status](https://readthedocs.org/projects/chapisha/badge/?version=latest)](https://chapisha.readthedocs.io/en/latest/?badge=latest)
-[![Build Status](https://travis-ci.com/whythawk/chapisha.svg?branch=main)](https://travis-ci.com/whythawk/chapisha)
+[![Build Status](https://github.com/whythawk/chapisha/actions/workflows/python-app.yml/badge.svg)](https://github.com/whythawk/chapisha/actions)
 
 ## What is it?
 
