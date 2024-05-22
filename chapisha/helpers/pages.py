@@ -10,8 +10,8 @@ from typing import Optional
 
 from . import coreio as _c
 from . import formats
-from ..models.metadata import WorkMetadata
-from ..models.matter import MatterPartition, FrontMatter, Matter
+from chapisha.models.metadata import WorkMetadata
+from chapisha.models.matter import MatterPartition, FrontMatter, Matter
 
 DATA_PATH = _c.get_helper_path() / "data"
 DEFAULT_CHAPTER = "chapter-template.xhtml"

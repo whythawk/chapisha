@@ -8,10 +8,10 @@ import re
 import base64
 import filetype
 
-from ..models.metadata import WorkMetadata, Contributor
-from ..models.matter import Matter, MatterPartition
-from ..helpers import pages, formats, coreio as _c
-from ..helpers.updatezipfile import UpdateZipFile
+from chapisha.models.metadata import WorkMetadata, Contributor
+from chapisha.models.matter import Matter, MatterPartition
+from chapisha.helpers import pages, formats, coreio as _c
+from chapisha.helpers.updatezipfile import UpdateZipFile
 
 
 class CreateWork:

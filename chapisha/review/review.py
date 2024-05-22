@@ -5,7 +5,7 @@ from epubcheck import EpubCheck
 
 from chapisha.helpers.updatezipfile import UpdateZipFile
 from chapisha.models.metadata import DublinCoreMetadata, WorkMetadata, ContributorRoles
-from ..helpers import coreio as _c
+from chapisha.helpers import coreio as _c
 
 
 class ReviewWork:
