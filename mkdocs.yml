@@ -1,0 +1,66 @@
+site_name: chapisha
+site_description: Chapisha - docx to standards-compliant epub3 conversion
+site_url: https://chapisha.readthedocs.io/
+site_author: Gavin Chait
+
+theme:
+  name: material
+  palette:
+  - media: "(prefers-color-scheme: light)"
+    scheme: default
+    primary: amber
+    accent: amber
+    toggle:
+      icon: material/lightbulb-outline
+      name: "Switch to dark mode"
+  - media: "(prefers-color-scheme: dark)"
+    scheme: slate
+    primary: amber
+    accent: amber
+    toggle:
+      icon: material/lightbulb
+      name: "Switch to light mode"
+  features:
+    - navigation.path
+    - navigation.footer
+    - content.code.copy
+  logo: "assets/logo.svg"
+  favicon: "assets/logo.svg"
+
+repo_name: whythawk/chapisha
+repo_url: https://github.com/whythawk/chapisha
+edit_uri: blob/master/docs/
+
+nav:
+- Overview: index.md
+- Install: installation.md
+- Create: create.md
+- API:
+  - CreateWork: api/create.md
+- Contributing to chapisha: contributing.md
+- Changelog: changelog.md
+
+markdown_extensions:
+- attr_list
+- tables
+- toc:
+    permalink: true
+    title: Contents
+- admonition
+- pymdownx.highlight
+- pymdownx.extra
+- pymdownx.emoji:
+    emoji_index: !!python/name:material.extensions.emoji.twemoji
+    emoji_generator: !!python/name:material.extensions.emoji.to_svg
+- pymdownx.tabbed:
+    alternate_style: true
+
+watch:
+- chapisha
+
+plugins:
+- search
+- mkdocstrings:
+    handlers:
+      python:
+        path: .
