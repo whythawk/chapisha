@@ -1,15 +1,13 @@
 """
 Miscellaneous tools for supporting core functionality.
 """
+
 import json
-import sys, re
-import copy
-import hashlib
 from urllib.parse import urlparse
-from datetime import datetime
-from pathlib import Path, PurePath
+from pathlib import Path
 from typing import Optional, Union, Any
 import locale
+
 try:
     locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
 except locale.Error:
@@ -24,17 +22,19 @@ JSONType = Union[str, int, float, bool, None, dict[str, Any], list[Any]]
 ###################################################################################################
 
 DEFAULT_BASE64_TYPES = {
-    "cover": "^data:image\/(png|jpe?g);base64,",
-    "work": "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,"
+    "cover": r"^data:image\/(png|jpe?g);base64,",
+    "work": "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,",
 }
 DEFAULT_METADATA_SETTINGS = "work_metadata.json"
 DEFAULT_DATA_DIRECTORY = Path(__file__).resolve().parent / "data"
+
 
 def get_helper_path():
     """
     Get the Chapisha helper path. Used, usually, when needing template resources in the helpers folder.
     """
     return Path(__file__).resolve().parent
+
 
 def check_path(directory: str):
     """
@@ -46,6 +46,7 @@ def check_path(directory: str):
         Complete directory address as a string.
     """
     Path(directory).mkdir(parents=True, exist_ok=True)
+
 
 def check_source(source: str) -> bool:
     """
@@ -63,8 +64,9 @@ def check_source(source: str) -> bool:
     if Path(source).exists():
         return True
     else:
-        e = F"Source at `{source}` not found."
+        e = f"Source at `{source}` not found."
         raise FileNotFoundError(e)
+
 
 def check_uri(source: str) -> bool:
     """
@@ -83,12 +85,14 @@ def check_uri(source: str) -> bool:
     try:
         result = urlparse(source)
         return all([result.scheme, result.netloc])
-    except:
+    except Exception:
         return False
+
 
 ###################################################################################################
 ### JSON, Schema and Action get and set
 ###################################################################################################
+
 
 def load_json(source: str) -> dict:
     """
@@ -113,10 +117,11 @@ def load_json(source: str) -> dict:
         try:
             return json.load(f)
         except json.decoder.JSONDecodeError:
-            e = F"File at `{source}` not valid json."
+            e = f"File at `{source}` not valid json."
             raise json.decoder.JSONDecodeError(e)
 
-def save_json(data: dict, source: Path, overwrite: Optional[bool]=False) -> bool:
+
+def save_json(data: dict, source: Path, overwrite: Optional[bool] = False) -> bool:
     """
     Save a dictionary as a json file. Return `False` if file `source` already exists and not
     `overwrite`.
@@ -136,7 +141,7 @@ def save_json(data: dict, source: Path, overwrite: Optional[bool]=False) -> bool
         True if saved, False if already exists without `overwrite`
     """
     if Path(source).exists() and not overwrite:
-        e = F"`{source}` already exists. Set `overwrite` to `True`."
+        e = f"`{source}` already exists. Set `overwrite` to `True`."
         raise FileExistsError(e)
     with open(source, "w") as f:
         json.dump(data, f, indent=4, sort_keys=True, default=str)

@@ -9,9 +9,10 @@ from . import coreio as _c
 DIRECTORY = _c.get_helper_path() / "data" / "fonts"
 TITLEPAGE_FONT = "PT-Serif.ttf"
 TITLEPAGE_HEIGHT = 700
-TITLEPAGE_WIDTH = 1000 # Relatively generous margin
-TITLE_SIZE = 70 # Approx 90px / 1.333 conversion factor
-AUTHOR_SIZE = 58 # Approx 75px / 1.333 conversion factor
+TITLEPAGE_WIDTH = 1000  # Relatively generous margin
+TITLE_SIZE = 70  # Approx 90px / 1.333 conversion factor
+AUTHOR_SIZE = 58  # Approx 75px / 1.333 conversion factor
+
 
 def get_text_rows(text: str, font_size: int = TITLE_SIZE) -> list[str]:
     """
@@ -34,7 +35,7 @@ def get_text_rows(text: str, font_size: int = TITLE_SIZE) -> list[str]:
     fits_titlepage_width = False
     while not fits_titlepage_width:
         # Create individual text rows
-        fitted_rows = len(word_list)//rows
+        fitted_rows = len(word_list) // rows
         start, end = 0, fitted_rows
         text_rows = []
         while end < rows * fitted_rows:
@@ -42,15 +43,16 @@ def get_text_rows(text: str, font_size: int = TITLE_SIZE) -> list[str]:
             text_rows.append(" ".join(word_list[start:end]))
             start += fitted_rows
             end += fitted_rows
-        if word_list[start:]: 
+        if word_list[start:]:
             text_rows.append(" ".join(word_list[start:]))
         # Check title rows fit
         max_width = 0
         for phrase in text_rows:
-            word_image = Image.new("RGBA", (0,0), (255, 255, 255, 0))
+            word_image = Image.new("RGBA", (0, 0), (255, 255, 255, 0))
             draw = ImageDraw.Draw(word_image)
-            word_width, h = draw.textsize(phrase, font=font)
-            if word_width > max_width: max_width = word_width
+            word_width = draw.textlength(phrase, font=font)
+            if word_width > max_width:
+                max_width = word_width
         if max_width > TITLEPAGE_WIDTH:
             # Increment the number of rows and start again
             rows += 1
@@ -58,6 +60,7 @@ def get_text_rows(text: str, font_size: int = TITLE_SIZE) -> list[str]:
         # It worked
         fits_titlepage_width = True
     return text_rows
+
 
 def get_text_paragraphs(text: str) -> list[str]:
     """

@@ -579,13 +579,13 @@ img.epub-type-z3998-publisher-logo{
 }
 
 /* Give PNGs a white background for night mode compatibility... */
-img.epub-type-se-image-color-depth-black-on-transparent{
+img.epub-type-image-color-depth-black-on-transparent{
 	background: #fff !important;
 }
 
 /* Or if the device supports prefers-color-scheme. We’ll invert the image in core.css. RMSDK requires a target media as well as a state. */
 @media all and (prefers-color-scheme){
-	img.epub-type-se-image-color-depth-black-on-transparent{
+	img.epub-type-image-color-depth-black-on-transparent{
 		background: transparent !important;
 	}
 }
@@ -638,11 +638,12 @@ section[epub|type~="titlepage"] img{
 
 section[epub|type~="colophon"],
 section[epub|type~="dedication"],
-section[epub|type~="imprint"]{
+section[epub|type~="imprint"] {
 	text-align: center;
 }
 
 section[epub|type~="colophon"] header,
+section[epub|type~="dedication"] header,
 section[epub|type~="imprint"] header{
 	line-height: 0;
 	margin-top: 3em;
@@ -653,15 +654,23 @@ section[epub|type~="imprint"] h2{
 	display: none;
 }
 
-img[epub|type~="z3998:publisher-logo"]{
+section[epub|type~="colophon"] h3,
+section[epub|type~="imprint"] h3{
+	text-align: center;
+}
+
+img[epub|type~="z3998:publisher-logo"] {
 	max-width: 25%;
 }
 
 section[epub|type~="colophon"] p,
-section[epub|type~="dedication"] p,
 section[epub|type~="imprint"] p{
 	margin: 1em auto 0 auto;
 	text-indent: 0;
+}
+
+section[epub|type~="dedication"] p{
+	text-align: center;
 }
 
 section[epub|type~="imprint"] p{

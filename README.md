@@ -5,7 +5,7 @@
 
 ## What is it?
 
-**Chapisha** provides an intuitive method for converting a well-formatted Microsoft Word `.docx` file into a 
+**Chapisha** (/ʧæpiʃɑ/) provides an intuitive method for converting a well-formatted Microsoft Word `.docx` file into a 
 standards-compliant EPUB3 ebook.
 
 There are only a small number of steps required to create your `.epub`, and **Chapisha** will provide an appropriate

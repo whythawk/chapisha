@@ -23,26 +23,37 @@ include = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.9.1"
-beautifulsoup4 = "^4.9.3"
-pypandoc = "^1.5"
-epubcheck = "^0.4.2"
-tomlkit = "^0.7.0"
-pydantic = "^1.7.3"
-regex = "^2020.11.13"
-filetype = "^1.0.7"
-lxml = "^4.6.2"
-Pillow = "^8.1.2"
+python = "^3.12"
+beautifulsoup4 = "^4.12.3"
+pypandoc = "^1.13"
+epubcheck = "^4.2.6"
+tomlkit = "^0.12.5"
+pydantic = "^2.7.1"
+regex = "^2024.5.10"
+filetype = "^1.2.0"
+lxml = "^5.2.2"
+Pillow = "^10.3.0"
 
-[tool.poetry.dev-dependencies]
-pytest = "^5.2"
-jupyterlab = "^3.0.5"
-Sphinx = "^3.4.3"
-sphinx-rtd-theme = "^0.5.1"
+[tool.poetry.group.dev.dependencies]
+black = ">=24.4.2"
+flake8 = ">=7.0.0"
+pytest = ">=8.2.0"
+jupyterlab = ">=4.2.0"
+
+[tool.poetry.group.docs.dependencies]
+mkdocs = ">=1.6.0"
+mkdocs-exclude = ">=1.0.2"
+mkdocstrings-python = ">=1.10.2"
+mkdocs-redirects = ">=1.2.1"
+mkdocs-material = ">=9.5.23"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
+[tool.black]
+line-length = 120
+target-version = ["py312"]
+
 [tool.poetry.extras]
-docs = ["Sphinx"]
+docs = ["MKDocs"]

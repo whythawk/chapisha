@@ -4,7 +4,7 @@ import base64
 from chapisha import __version__
 from chapisha import CreateWork
 
-DIRECTORY = Path(__file__).resolve().parent / "data" 
+DIRECTORY = Path(__file__).resolve().parent / "data"
 DOCUMENT = DIRECTORY / "usan-abasis-lament.docx"
 COVER = DIRECTORY / "cover.jpg"
 METADATA_FULL = {
@@ -26,9 +26,9 @@ METADATA_PARTIAL = {
     "rights": "Attribution-NonCommercial-ShareAlike 4.0 International.",
 }
 CONTRIBUTOR = {
-    "role": "artist", 
-    "name": "Rodd Halstead", 
-    "terms": "Cover image 'Red Maple Fruit (Samara)' photograph. All rights reserved. Used under licence.", 
+    "role": "artist",
+    "name": "Rodd Halstead",
+    "terms": "Cover image 'Red Maple Fruit (Samara)' photograph. All rights reserved. Used under licence.",
     "year": "2006"
 }
 RIGHTS = [
@@ -71,4 +71,3 @@ class TestCreateWork:
         work.set_dedication(DEDICATION_STRING)
         work.build()
         assert work.validate()
-

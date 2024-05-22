@@ -1,11 +1,11 @@
 dist: focal
 language: python
 python:
-  - "3.9.1"
+  - "3.12"
 # command to install dependencies
 before_install:
   - sudo apt-get update
-  - sudo apt-get -y install pandoc default-jre
+  - sudo apt-get -y install python3-dev libevent-dev pandoc default-jre
   - pip install poetry
 install:
   - poetry install
