@@ -10,7 +10,7 @@ COVER = DIRECTORY / "cover.jpg"
 METADATA_FULL = {
     "identifier": "isbn:9780993191459",
     "title": "Usan Abasi's Lament",
-    "description": "Years after the events of \"Lament for the Fallen\", Isaiah tells of the myth of Usan Abasi, who was punished by the Sky God to spend eternity in the form of a brass bowl and imprisoned within a vast termite mountain. Now the ceremony which ensures that Usan Abasi remains dormant has failed, and his ancient evil awakes. A free, stand-alone short-story set in the city of Ewuru and linking \"Lament for the Fallen\" to a forthcoming novel.",
+    "description": 'Years after the events of "Lament for the Fallen", Isaiah tells of the myth of Usan Abasi, who was punished by the Sky God to spend eternity in the form of a brass bowl and imprisoned within a vast termite mountain. Now the ceremony which ensures that Usan Abasi remains dormant has failed, and his ancient evil awakes. A free, stand-alone short-story set in the city of Ewuru and linking "Lament for the Fallen" to a forthcoming novel.',
     "language": "en",
     "creator": ["Gavin Chait"],
     "rights": "Attribution-NonCommercial-ShareAlike 4.0 International.",
@@ -18,7 +18,7 @@ METADATA_FULL = {
     "publisher_uri": "https://qwyre.com",
     "work-uri": "https://gavinchait.com",
     "date": "2017-07-23",
-    "subject": ["science fiction", "african mythology"]
+    "subject": ["science fiction", "african mythology"],
 }
 METADATA_PARTIAL = {
     "title": "Usan Abasi's Lament",
@@ -29,24 +29,21 @@ CONTRIBUTOR = {
     "role": "artist",
     "name": "Rodd Halstead",
     "terms": "Cover image 'Red Maple Fruit (Samara)' photograph. All rights reserved. Used under licence.",
-    "year": "2006"
+    "year": "2006",
 }
 RIGHTS = [
     "You are free to copy and redistribute the Work in any medium or format, and remix, transform, and build upon the Work. The creator cannot revoke these freedoms as long as you follow the license terms.",
-    "In return: You may not use the material for commercial purposes. You must give appropriate credit, provide a link to this license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the creator endorses you or your use. If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original. You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits."
+    "In return: You may not use the material for commercial purposes. You must give appropriate credit, provide a link to this license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the creator endorses you or your use. If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original. You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.",
 ]
-DEDICATION = [
-    "For those who leave.",
-    "For those who remain.",
-    "For the wings and tail.",
-    "But most, for her"
-]
+DEDICATION = ["For those who leave.", "For those who remain.", "For the wings and tail.", "But most, for her"]
 DEDICATION_STRING = "\nFor those who leave.\n\nFor those who remain.\n"
+
 
 class TestCreateWork:
 
     def test_version(self):
         assert __version__ == "0.5.2"
+        assert Path(DOCUMENT).exists()
 
     def test_stateless_build(self, tmpdir):
         work = CreateWork(tmpdir, stateless=True)
