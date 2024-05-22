@@ -45,8 +45,8 @@ class TestCreateWork:
         assert __version__ == "0.5.2"
         assert Path(DOCUMENT).exists()
 
-    def test_stateless_build(self, tmpdir):
-        work = CreateWork(tmpdir, stateless=True)
+    def test_stateless_build(self, tmp_path):
+        work = CreateWork(tmp_path, stateless=True)
         work.set_metadata(METADATA_FULL)
         work.set_document(DOCUMENT)
         work.set_cover(COVER)
@@ -56,8 +56,8 @@ class TestCreateWork:
         work.build()
         assert work.validate()
 
-    def test_partial_non_stateless_build(self, tmpdir):
-        work = CreateWork(tmpdir)
+    def test_partial_non_stateless_build(self, tmp_path):
+        work = CreateWork(tmp_path)
         work.set_metadata(METADATA_PARTIAL)
         with open(DOCUMENT, "rb") as d:
             work_text = base64.b64encode(d.read()).decode("utf-8")
