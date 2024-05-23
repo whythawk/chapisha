@@ -34,18 +34,9 @@ jobs:
         pip install -U poetry pytest
         echo "$HOME/.poetry/bin" >> $GITHUB_PATH
         poetry config virtualenvs.in-project true
-    - name: Set up cache
-      uses: actions/cache@v4
-      id: cached-poetry-dependencies
-      with:
-        path: .venv
-        key: venv-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('**/poetry.lock') }}
-    - name: Install poetry dependencies
+    - name: Install chapisha dependencies
       run: |
         poetry install --no-interaction
-        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-    - name: Download pandoc
-      run: |
         poetry remove pypandoc --no-interaction
         poetry add pypandoc_binary --no-interaction
     - name: Test with pytest
