@@ -66,7 +66,7 @@ def _get_temporary_path(tmp_path: Path | None = None) -> Path:
 class TestCreateWork:
 
     def test_version(self):
-        assert __version__ == "0.5.2"
+        assert __version__ == "0.6.0"
         assert Path(DOCUMENT).exists()
 
     def test_stateless_build(self, tmp_path):

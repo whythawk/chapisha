@@ -3,11 +3,19 @@ title: Change log
 summary: Version history, including for legacy versions.
 authors:
   - Gavin Chait
-date: 2024-05-16
+date: 2024-05-23
 tags: epub-generation, epub3, docx-to-epub
 ---
 
 # Change log
+
+## Version 0.6.0 (2024-05-23)
+
+- Python 3.9 -> 3.12.
+- Upgraded all dependencies.
+- Fixes to `dark mode` SVG and image files generated in the `epub` to add a white border.
+- General fixes to metadata throughout.
+- Documentation from Sphinx to MKDocs.
 
 ## Version 0.5.2 (2021-11-21)
 

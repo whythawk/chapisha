@@ -23,7 +23,8 @@ tags: epub-generation, epub3, docx-to-epub
 You will also need to install `Pandoc` and `Java`::
 
 ```bash
-sudo apt install pandoc default-jre
+sudo apt-get update
+sudo apt-get -y install pandoc default-jre
 ```
 
 It could run on lower versions, but this hasn't been tested. If you want to work with Jupyter, then
@@ -32,8 +33,10 @@ either install Jupyter only, or Anaconda.
 You may find some Python dependencies fail with `gcc` errors, and you may need to install a few other core dependencies:
 
 ```bash
-sudo apt install python3-dev libevent-dev
+sudo apt-get -y install python3-dev libevent-dev
 ```
+
+More information on [installing Pandoc](https://pandoc.org/installing.html).
 
 ## Installing
 

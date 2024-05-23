@@ -1,7 +1,6 @@
 # Chapisha: docx to standards-compliant epub3 conversion
 
 [![Documentation Status](https://readthedocs.org/projects/chapisha/badge/?version=latest)](https://chapisha.readthedocs.io/en/latest/?badge=latest)
-[![Build Status](https://github.com/whythawk/chapisha/actions/workflows/python-app.yml/badge.svg)](https://github.com/whythawk/chapisha/actions)
 
 ## What is it?
 
@@ -34,13 +33,14 @@ simple, stateless Python frame around it, which means you can also include it in
 
 ## Installation and dependencies
 
-You'll need at least Python 3.9, then:
+You'll need at least Python 3.12, then:
 
     pip install chapisha
 
 You will also need to install `Pandoc` and `Java`:
 
-    sudo apt install pandoc default-jre
+    sudo apt-get update
+    sudo apt-get -y install python3-dev libevent-dev pandoc default-jre
 
 ## Changelog
 
