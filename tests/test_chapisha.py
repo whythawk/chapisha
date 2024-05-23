@@ -1,10 +1,16 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from pathlib import Path
+import os
+import shutil
 import base64
 
 from chapisha import __version__
 from chapisha import CreateWork
 
 DIRECTORY = Path(__file__).resolve().parent / "data"
+TEST_DIRECTORY = Path(__file__).resolve().parent / "_test"
 DOCUMENT = DIRECTORY / "usan-abasis-lament.docx"
 COVER = DIRECTORY / "cover.jpg"
 METADATA_FULL = {
@@ -39,6 +45,24 @@ DEDICATION = ["For those who leave.", "For those who remain.", "For the wings an
 DEDICATION_STRING = "\nFor those who leave.\n\nFor those who remain.\n"
 
 
+def _delete_temporary_path() -> bool:
+    # Try to remove the tree; if it fails, throw an error using try...except.
+    # https://stackoverflow.com/a/42641792/295606
+    try:
+        shutil.rmtree(str(TEST_DIRECTORY))
+    except OSError as e:
+        print("Error: %s - %s." % (e.filename, e.strerror))
+    return True
+
+
+def _get_temporary_path(tmp_path: Path | None = None) -> Path:
+    if os.getenv("GITHUB_ACTIONS"):
+        _delete_temporary_path()
+        Path(TEST_DIRECTORY).mkdir(parents=True, exist_ok=True)
+        return TEST_DIRECTORY
+    return tmp_path
+
+
 class TestCreateWork:
 
     def test_version(self):
@@ -46,6 +70,7 @@ class TestCreateWork:
         assert Path(DOCUMENT).exists()
 
     def test_stateless_build(self, tmp_path):
+        tmp_path = _get_temporary_path(tmp_path)
         work = CreateWork(tmp_path, stateless=True)
         work.set_metadata(METADATA_FULL)
         work.set_document(DOCUMENT)
@@ -55,8 +80,10 @@ class TestCreateWork:
         work.set_rights(RIGHTS)
         work.build()
         assert work.validate()
+        assert _delete_temporary_path()
 
     def test_partial_non_stateless_build(self, tmp_path):
+        tmp_path = _get_temporary_path(tmp_path)
         work = CreateWork(tmp_path)
         work.set_metadata(METADATA_PARTIAL)
         with open(DOCUMENT, "rb") as d:
@@ -68,3 +95,4 @@ class TestCreateWork:
         work.set_dedication(DEDICATION_STRING)
         work.build()
         assert work.validate()
+        assert _delete_temporary_path()
