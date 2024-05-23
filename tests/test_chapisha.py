@@ -70,7 +70,7 @@ class TestCreateWork:
         assert Path(DOCUMENT).exists()
 
     def test_stateless_build(self, tmp_path):
-        tmp_path = _get_temporary_path(tmp_path)
+        # tmp_path = _get_temporary_path(tmp_path)
         work = CreateWork(tmp_path, stateless=True)
         work.set_metadata(METADATA_FULL)
         work.set_document(DOCUMENT)
@@ -78,12 +78,13 @@ class TestCreateWork:
         work.add_contributor(CONTRIBUTOR)
         work.set_dedication(DEDICATION)
         work.set_rights(RIGHTS)
+        assert Path(work.directory / f"{work.work_name}.docx").exists()
         work.build()
         assert work.validate()
-        assert _delete_temporary_path()
+        # assert _delete_temporary_path()
 
     def test_partial_non_stateless_build(self, tmp_path):
-        tmp_path = _get_temporary_path(tmp_path)
+        # tmp_path = _get_temporary_path(tmp_path)
         work = CreateWork(tmp_path)
         work.set_metadata(METADATA_PARTIAL)
         with open(DOCUMENT, "rb") as d:
@@ -95,4 +96,4 @@ class TestCreateWork:
         work.set_dedication(DEDICATION_STRING)
         work.build()
         assert work.validate()
-        assert _delete_temporary_path()
+        # assert _delete_temporary_path()

@@ -318,15 +318,23 @@ class CreateWork:
             e = "`set_metadata` before building creative work."
             raise PermissionError(e)
         epub_path = self.directory.parent / f"{self.work_name}.epub"
+        sandbox = True
+        if os.getenv("GITHUB_ACTIONS"):
+            # Specific case in testing Github Actions, problem with sandbox
+            sandbox = False
         # Generate the initial creative content using Pandoc
         # pypandoc can't handle PosixPaths ...
         if self.stateless:
             pypandoc.convert_file(
-                str(self.directory / f"{self.work_name}.docx"), format="docx", to="epub3", outputfile=str(epub_path)
+                str(self.directory / f"{self.work_name}.docx"),
+                format="docx",
+                to="epub3",
+                outputfile=str(epub_path),
+                sandbox=sandbox,
             )
         else:
             # Maybe one day Pandoc can return an epub object and we won't save the interim file
-            pypandoc.convert_text(self.work, format="docx", to="epub3", outputfile=str(epub_path))
+            pypandoc.convert_text(self.work, format="docx", to="epub3", outputfile=str(epub_path), sandbox=sandbox)
         # Generate the epub version
         with UpdateZipFile(epub_path, "a") as w:
             # REMOVES
