@@ -110,7 +110,7 @@ class ReviewWork:
                 self.metadata.word_count += len(words.replace("\n", " ").replace("  ", " ").strip().split())
         return self.metadata
 
-    def get_thumbnail(self, size=(147, 235)) -> Image.Image | None:
+    def get_thumbnail(self, size: tuple[int, int] = (147, 235)) -> Image.Image | None:
         with UpdateZipFile(self.source, "a") as w:
             # DublinCore
             container_xml = w.read("META-INF/container.xml")
