@@ -1,6 +1,7 @@
 # Chapisha: docx to standards-compliant epub3 conversion
 
-[![Documentation Status](https://readthedocs.org/projects/chapisha/badge/?version=latest)](https://chapisha.readthedocs.io/en/latest/?badge=latest)
+> [!WARNING]
+> This repository is deprecated and kept as a historical record. Chapisha is being redeveloped on [Chapisha](https://forge.whythawk.com/library/chapisha).
 
 ## What is it?
 
